@@ -8,4 +8,7 @@
     <ProjectReference Include="../Scholarship.Core/Scholarship.Core.csproj" />
     <ProjectReference Include="../Scholarship.Infrastructure/Scholarship.Infrastructure.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" PrivateAssets="all" />
+  </ItemGroup>
 </Project>

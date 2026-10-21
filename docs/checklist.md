@@ -55,7 +55,7 @@ Check an item only when its completion criterion is demonstrated, relevant failu
   - Done when: React/Vite/TypeScript and ASP.NET API/Core/Infrastructure/Worker build; versions pinned and README runs locally.
   - Area: Engineering. Depends on: None.
 
-- [ ] **F02 — Start local database and email sandbox**
+- [x] **F02 — Start local database and email sandbox**
   - Done when: Docker Compose starts PostgreSQL and Mailpit; migrations create a fresh database.
   - Area: Database. Depends on: F01.
 

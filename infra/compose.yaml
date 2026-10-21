@@ -1,0 +1,40 @@
+services:
+  postgres:
+    image: postgres:17.11
+    environment:
+      POSTGRES_DB: scholarship_dev
+      POSTGRES_USER: scholarship_dev
+      POSTGRES_PASSWORD: local_dev_only
+    ports:
+      - "127.0.0.1:5433:5432"
+    volumes:
+      - scholarship_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U scholarship_dev -d scholarship_dev"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  mailpit:
+    image: axllent/mailpit:v1.31.5
+    ports:
+      - "127.0.0.1:1025:1025"
+      - "127.0.0.1:8025:8025"
+
+  pgadmin:
+    image: dpage/pgadmin4:9.18.0
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@scholarship.dev
+      PGADMIN_DEFAULT_PASSWORD: local_admin_only
+    ports:
+      - "127.0.0.1:5050:80"
+    volumes:
+      - scholarship_pgadmin_data:/var/lib/pgadmin
+      - ./pgadmin/servers.json:/pgadmin4/servers.json:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  scholarship_postgres_data:
+  scholarship_pgadmin_data:

@@ -1,0 +1,13 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "Scholarship local",
+      "Group": "Local",
+      "Host": "postgres",
+      "Port": 5432,
+      "MaintenanceDB": "scholarship_dev",
+      "Username": "scholarship_dev",
+      "SSLMode": "prefer"
+    }
+  }
+}

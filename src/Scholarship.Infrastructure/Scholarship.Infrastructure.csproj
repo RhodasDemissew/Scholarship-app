@@ -7,4 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="../Scholarship.Core/Scholarship.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
+  </ItemGroup>
 </Project>
