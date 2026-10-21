@@ -64,8 +64,8 @@ Check an item only when its completion criterion is demonstrated, relevant failu
   - Area: Catalogue. Depends on: F02.
 
 - [ ] **F04 — Configure frontend conventions**
-  - Done when: Router, Tailwind/shadcn, Query, Hook Form/Zod and generated OpenAPI client work in a sample flow.
-  - Area: Frontend. Depends on: F03.
+  - Done when: Router, Tailwind/shadcn, Query, Hook Form/Zod and generated OpenAPI client work in a sample flow; Swagger UI serves the API's OpenAPI document in development for manual endpoint testing.
+  - Area: Frontend/API tooling. Depends on: F03.
 
 - [ ] **F05 — Deploy staging on Contabo**
   - Done when: Nginx serves built React and proxies API; DB is private; staging data/secrets are isolated.

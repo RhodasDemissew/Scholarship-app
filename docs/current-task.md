@@ -49,3 +49,7 @@ Historical note: the initial toolchain lacked the then-selected Node 24 and .NET
 
 - Pinned Vite 7.3.7 in the frontend manifest and lockfile to address the reported Vite 7.1.12 advisories.
 - With Node 22.17.1, `npm.cmd ci`, `npm.cmd run build`, and `npm.cmd audit --audit-level=high` passed in `apps/web`; the audit reported zero vulnerabilities.
+
+## Planning note
+
+- F04 now includes development-only Swagger UI for manual API testing alongside the generated OpenAPI client. F02 remains next; Swagger UI was not added to F01.
