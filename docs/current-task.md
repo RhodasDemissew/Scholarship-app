@@ -1,25 +1,24 @@
-# Current task: F02 — Start local database and email sandbox
+# Current task: F03 — Build the first end-to-end listing
 
-Status: **Complete** (21 October 2026). Next task: **F03 — Build the first end-to-end listing**.
+Status: **Complete** (21 October 2026). Next task: **F04 — Configure frontend conventions**.
 
 ## Scope
 
-Run PostgreSQL 17 and Mailpit locally with Docker Compose. Configure EF Core 10 with the Npgsql provider, pin package and local EF CLI versions, and apply an initial migration to a fresh database. No catalogue or email-delivery feature is implemented in F02.
+Add one clearly fictional opportunity cycle to PostgreSQL with an EF Core migration, expose it through the API, and show it in React with loading, error, retry, and empty states. This is a small vertical slice; the full catalogue model belongs to later tasks.
 
 ## Completion criteria
 
-- Docker Compose starts PostgreSQL and Mailpit.
-- An EF migration creates a fresh local database.
+- A fictional cycle is read from PostgreSQL through the API.
+- React fetches and displays that cycle, with loading and error states.
 
 ## Verification results
 
-- `docker compose -f infra/compose.yaml -p scholarship ps`: PostgreSQL 17.11 and Mailpit v1.31.5 both healthy; ports are bound to `127.0.0.1` only.
-- `dotnet tool run dotnet-ef -- database update --project src/Scholarship.Infrastructure --startup-project src/Scholarship.Api --configuration Release`: applied `20261021085336_InitialDatabase` to the newly created `scholarship_dev` database.
-- `dotnet tool run dotnet-ef -- migrations list ...`: listed `20261021085336_InitialDatabase` as applied. PostgreSQL contains `__EFMigrationsHistory`.
-- Mailpit's local web UI at `http://127.0.0.1:8025/` returned HTTP 200.
-- API and Worker Release builds passed with zero warnings or errors.
-- Follow-up: pgAdmin 4 v9.18.0 runs at `http://127.0.0.1:5050`. Its browser page returned HTTP 302 to login, its preloaded server entry was imported, and a connection from its container to `scholarship_dev` succeeded.
+- Migration `20261021092859_FirstOpportunityCycle` applied to the local PostgreSQL database.
+- API `GET /api/v1/opportunities` returned the seeded fictional cycle; `GET /health` returned healthy.
+- Vite proxy `GET /api/v1/opportunities` returned the same cycle while the API ran. With the API stopped, the proxy returned HTTP 500, exercising the response failure that React handles with its error and retry state.
+- API and Worker Release builds passed with zero warnings or errors. Frontend `npm.cmd run build` passed.
+- A visual browser check could not run because this session has no available browser surface. The React display and state transitions are implemented and compile, but their rendered appearance remains for a manual browser check.
 
 ## Handoff
 
-The initial migration intentionally has no feature tables; F03 adds the first listing model and fixture. The database and pgAdmin have separate persistent Docker volumes. Mailpit is running but no application email sender is wired yet. The credentials in Compose and `appsettings.Development.json` are local-only. Use the README commands to restart services and apply migrations. Full reports are in `docs/f01-report.md` and `docs/f02-report.md`.
+Start Docker services and apply migrations using the README commands, then run the API and Vite in separate terminals. Open the Vite URL to check the fictional card and stop the API to check the error/retry state. The learning report is in `docs/f03-report.md`. F04 adds the planned frontend libraries, generated API client, and Swagger UI; no F04 tooling was added here.

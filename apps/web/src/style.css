@@ -1,4 +1,10 @@
 :root { font-family: system-ui, sans-serif; color: #183047; background: #f7fafc; }
 body { margin: 0; }
-main { max-width: 44rem; margin: 12vh auto; padding: 1.5rem; }
+main { max-width: 44rem; margin: 8vh auto; padding: 1.5rem; }
 h1 { line-height: 1.2; }
+.intro { color: #52677a; }
+.opportunity { background: white; border: 1px solid #d5e0e8; border-radius: .75rem; padding: 1.25rem; margin-top: 1.5rem; }
+.opportunity h2 { margin-bottom: .5rem; }
+.opportunity p { margin: .4rem 0; }
+.badge { display: inline-block; padding: .25rem .55rem; border-radius: 999px; background: #e8f0fb; color: #234b76; font-size: .8rem; font-weight: 600; }
+button { padding: .55rem .85rem; border: 1px solid #234b76; border-radius: .4rem; background: #fff; color: #234b76; cursor: pointer; }

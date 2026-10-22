@@ -59,7 +59,7 @@ Check an item only when its completion criterion is demonstrated, relevant failu
   - Done when: Docker Compose starts PostgreSQL and Mailpit; migrations create a fresh database.
   - Area: Database. Depends on: F01.
 
-- [ ] **F03 — Build the first end-to-end listing**
+- [x] **F03 — Build the first end-to-end listing**
   - Done when: A fictional cycle is read from PostgreSQL through the API and shown in React with loading and error states.
   - Area: Catalogue. Depends on: F02.
 

@@ -1,6 +1,6 @@
 # Scholarship Assistant
 
-Project foundation and local PostgreSQL/Mailpit services. The frontend is a placeholder and the API exposes `GET /health`.
+Local PostgreSQL/Mailpit services and a first fictional opportunity listing. The API exposes `GET /health` and `GET /api/v1/opportunities`.
 
 ## Prerequisites
 
@@ -23,7 +23,7 @@ The local PostgreSQL database is on `127.0.0.1:5433`. Mailpit's inbox is at `htt
 
 Open the database UI at `http://127.0.0.1:5050`. Sign in to pgAdmin with `admin@scholarship.dev` / `local_admin_only`, open **Scholarship local**, and enter the database password `local_dev_only` when prompted. In pgAdmin, use the container host `postgres` and port `5432`; the host-machine address `127.0.0.1:5433` is for tools running outside Docker.
 
-The credentials in Compose and `appsettings.Development.json` are for local development only. The initial migration creates EF's migration history; feature tables begin in later tasks.
+The credentials in Compose and `appsettings.Development.json` are for local development only. The F03 migration creates `OpportunityCycles` and seeds one clearly fictional example.
 
 To stop the services without deleting the database volume:
 
@@ -47,7 +47,7 @@ npm.cmd ci
 npm.cmd run dev
 ```
 
-Open the URL printed by Vite. Check the API at `http://127.0.0.1:5080/health`.
+Open the URL printed by Vite (normally `http://localhost:5173`). The page fetches the fictional listing through Vite's API proxy. Check the API at `http://127.0.0.1:5080/health` and `http://127.0.0.1:5080/api/v1/opportunities`.
 
 ## Build
 
