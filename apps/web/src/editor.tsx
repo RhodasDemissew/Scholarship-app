@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+﻿import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { request } from '@/lib/http';
@@ -25,7 +25,7 @@ export function Editor() {
 }
 function EditorForm({ initial, record }: {initial:Draft; record?:View}) {
  const [draft,setDraft]=useState<Draft>(structuredClone(initial));
- const [error,setError]=useState('');const [busy,setBusy]=useState(false);
+ const [error,setError]=useState('');const [busy,setBusy]=useState(false); const errorRef=useRef<HTMLParagraphElement>(null); useEffect(()=>{if(error)errorRef.current?.focus();},[error]);
  const client=useQueryClient();const navigate=useNavigate();
  const audit=useQuery({queryKey:['audit',record?.id],queryFn:()=>request<{action:string;at:string;changedFields:string;newStatus:string}[]>('/api/v1/editor/opportunities/'+record!.id+'/audit'),enabled:!!record});
  function field(name:keyof Draft,label:string,type='text') {
@@ -59,12 +59,13 @@ function EditorForm({ initial, record }: {initial:Draft; record?:View}) {
  <fieldset className="panel space-y-4"><legend className="font-semibold">Source evidence</legend><p>Overview evidence must identify the programme, award and intake. Every known deadline, funding claim and opening state needs its own evidence.</p>
  {draft.evidence.map((e,i)=><div key={i} className="space-y-3 border-t pt-4"><label>Evidence field<select value={e.field} onChange={event=>setDraft({...draft,evidence:draft.evidence.map((x,j)=>j===i?{...x,field:event.target.value}:x)})}>{['overview','opening',...deadlineKinds.map(x=>'deadline.'+x),...fundingKinds.map(x=>'funding.'+x)].map(x=><option key={x}>{x}</option>)}</select></label><label>Official source URL<Input type="url" value={e.sourceUrl} onChange={event=>setDraft({...draft,evidence:draft.evidence.map((x,j)=>j===i?{...x,sourceUrl:event.target.value}:x)})}/></label><label>Short source excerpt<textarea value={e.excerpt} onChange={event=>setDraft({...draft,evidence:draft.evidence.map((x,j)=>j===i?{...x,excerpt:event.target.value}:x)})}/></label><Button type="button" variant="outline" onClick={()=>setDraft({...draft,evidence:draft.evidence.filter((_,j)=>j!==i)})}>Remove evidence</Button></div>)}
  <Button type="button" variant="outline" onClick={()=>setDraft({...draft,evidence:[...draft.evidence,{field:'overview',sourceUrl:'',excerpt:''}]})}>Add evidence</Button></fieldset>
- {error && <p role="alert" className="notice border-red-300 text-red-800">{error}</p>}
+ {error && <p ref={errorRef} tabIndex={-1} role="alert" className="notice border-red-300 text-red-800">{error}</p>}
  <div className="flex flex-wrap gap-3"><Button disabled={busy}>Save draft</Button>{record && ['Draft','InReview','Reviewed','Published'].includes(record.publicationStatus) && <Button type="button" variant="outline" disabled={busy || JSON.stringify(draft)!==JSON.stringify(initial)} onClick={()=>void save(({Draft:'submit',InReview:'review',Reviewed:'publish',Published:'archive'} as Record<string,string>)[record.publicationStatus])}>{{Draft:'Submit for review',InReview:'Approve evidence review',Reviewed:'Publish',Published:'Archive'}[record.publicationStatus as 'Draft']}</Button>}
  <Button type="button" variant="outline" onClick={()=>window.location.reload()}>Reload saved version</Button></div></form>
  {record && <section className="panel mt-8"><h2>Audit history</h2>{audit.data?.map((a,i)=><p className="mt-2 text-sm" key={i}>{new Date(a.at).toLocaleString()} · {a.action} → {a.newStatus}{a.changedFields && ' · '+a.changedFields}</p>)}</section>}
  </>;
 }
+
 
 
 

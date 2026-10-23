@@ -7,6 +7,11 @@
   select, textarea { @apply block w-full min-w-0 rounded-md border border-slate-300 bg-white px-3 py-2 text-base focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700; }
   textarea { @apply min-h-24; }
   fieldset { min-width: 0; }
+  body { overflow-wrap: anywhere; }
+  label { @apply block; }
+  summary:focus-visible { @apply outline-2 outline-offset-4 outline-teal-700; }
+  input[type='checkbox'] { @apply h-5 w-5 shrink-0; }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; } }
  a:focus-visible { @apply outline-2 outline-offset-4 outline-teal-700; }
  nav a[aria-current='page'] { @apply font-semibold text-teal-800 underline underline-offset-8; }
 }

@@ -1,6 +1,6 @@
-﻿import { StrictMode } from 'react';
+﻿import { StrictMode, useEffect, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter, NavLink, Link, Route, Routes } from 'react-router';
+import { BrowserRouter, NavLink, Link, Route, Routes, useLocation } from 'react-router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Account, useSession } from './auth';
@@ -12,6 +12,12 @@ import { SavedPage, ReportsPage } from './saved';
 const queryClient=new QueryClient();
 function App() {
  const session=useSession();
+ const {pathname}=useLocation();const previousPath=useRef(pathname);
+ useEffect(()=>{
+  const names:Record<string,string>={'/':'Opportunities','/saved':'Your shortlist','/editor':'Editorial workspace','/login':'Sign in','/register':'Register','/security':'Account security','/about':'About','/demo':'Fictional demo'};
+  document.title=(names[pathname]??(pathname.startsWith('/opportunities/')?'Opportunity details':'Scholarship workspace'))+' | Scholarship Assistant';
+  if(previousPath.current!==pathname){document.getElementById('main')?.focus();window.scrollTo(0,0);previousPath.current=pathname;}
+ },[pathname]);
  return <><a className="skip-link" href="#main">Skip to content</a><header className="border-b border-slate-200 bg-white"><div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-5"><Link to="/" className="font-bold text-teal-900">Scholarship Assistant</Link><nav aria-label="Main navigation" className="flex flex-wrap gap-5 text-sm"><NavLink to="/" end>Opportunities</NavLink><NavLink to="/about">About</NavLink><NavLink to="/saved">Shortlist</NavLink><NavLink to="/account">Account</NavLink>{session.data?.roles.some(x=>['Editor','Administrator'].includes(x))&&<NavLink to="/editor">Editor workspace</NavLink>}</nav></div></header><main id="main" tabIndex={-1} className="mx-auto max-w-4xl px-6 py-12"><Routes>
  <Route path="/" element={<Explorer/>}/><Route path="/opportunities/:id" element={<OpportunityDetail/>}/>
  <Route path="/saved" element={<SavedPage/>}/><Route path="/editor/reports" element={<ReportsPage/>}/>
@@ -22,5 +28,6 @@ function App() {
  </Routes></main><footer className="mx-auto max-w-4xl px-6 pb-8 text-sm text-slate-500">Local development · Confirm details with the official provider</footer></>;
 }
 createRoot(document.getElementById('root')!).render(<StrictMode><QueryClientProvider client={queryClient}><BrowserRouter><App/></BrowserRouter></QueryClientProvider></StrictMode>);
+
 
 

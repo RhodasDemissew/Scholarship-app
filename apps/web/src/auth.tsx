@@ -38,12 +38,13 @@ export function Account() {
  {session.data?.authenticated && <div className="mb-5"><p>Signed in as {session.data.email}</p><Button variant="outline" onClick={async () => { await request('/api/v1/auth/logout','POST'); client.clear(); setMessage('Signed out.'); }}>Sign out</Button></div>}
  {action !== 'account' && <form noValidate className="space-y-4" onSubmit={form.handleSubmit(submit)}>
  <div><label htmlFor="email">Email</label><Input id="email" type="email" autoComplete="email" {...form.register('email')} aria-invalid={!!form.formState.errors.email} aria-describedby="email-error"/><p id="email-error" role="alert">{form.formState.errors.email?.message}</p></div>
- {needsPassword && <div><label htmlFor="password">Password</label><Input id="password" type="password" autoComplete={action === 'login' ? 'current-password' : 'new-password'} {...form.register('password')} aria-describedby="password-help"/><p id="password-help" className="text-sm text-slate-600">12–128 characters, including uppercase, lowercase, a number and a symbol.</p></div>}
+ {needsPassword && <div><label htmlFor="password">Password</label><Input id="password" type="password" autoComplete={action === 'login' ? 'current-password' : 'new-password'} {...form.register('password')} aria-invalid={!!form.formState.errors.password} aria-describedby="password-help password-error"/><p id="password-error" role="alert">{form.formState.errors.password?.message}</p><p id="password-help" className="text-sm text-slate-600">12–128 characters, including uppercase, lowercase, a number and a symbol.</p></div>}
  <Button disabled={form.formState.isSubmitting}>{form.formState.isSubmitting ? 'Working...' : title[action]}</Button></form>}
  {twoFactor && <form className="mt-4 space-y-3" onSubmit={async e => { e.preventDefault(); try { await request('/api/v1/auth/two-factor','POST',{code}); client.clear(); setTwoFactor(false); setMessage('Signed in.'); } catch(e) { setError((e as Error).message); } }}><label htmlFor="code">Authenticator code</label><Input id="code" autoComplete="one-time-code" value={code} onChange={e => setCode(e.target.value)}/><Button>Verify code</Button></form>}
  {message && <p role="status" className="mt-4">{message}</p>}{error && <p role="alert" className="mt-4 text-red-700">{error}</p>}
  <nav aria-label="Account actions" className="mt-6 flex flex-wrap gap-4 underline"><Link to="/login">Sign in</Link><Link to="/register">Register</Link><Link to="/forgot">Forgot password</Link><Link to="/resend">Resend verification</Link><Link to="/security">Authenticator setup</Link></nav>
  </div></>;
 }
+
 
 
