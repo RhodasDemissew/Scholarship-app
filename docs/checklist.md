@@ -1,6 +1,6 @@
 # Scholarship Assistant — Version Checklist
 
-Prepared 20 October 2026 from Implementation Blueprint revision 1.2. Product releases below are distinct from the blueprint document's revision number. No implementation is marked complete.
+Prepared 20 October 2026 from Implementation Blueprint revision 1.2. Product releases below are distinct from the blueprint document's revision number. Existing completion marks are preserved. Execution order revised 23 October 2026: finish V1 locally before deployment.
 
 ## Release map
 
@@ -11,7 +11,7 @@ Prepared 20 October 2026 from Implementation Blueprint revision 1.2. Product rel
 | V3 | 5 | Private documents; AI is optional and separately gated |
 | V4 | 6 | Choose expansions based on demand and measured load |
 
-V1 has four internal milestones (1A–1D), not four separate public releases. Finish required V1 tasks before adding V2 scope. Tasks in a version may run concurrently when their dependencies are satisfied; Order is a suggested display order. V4 is a menu, not a commitment to implement every item.
+V1 has five internal milestones (1A–1E), not five separate public releases. Finish required V1 tasks before adding V2 scope. Tasks in a version may run concurrently when their dependencies are satisfied; Order is a suggested display order. V4 is a menu, not a commitment to implement every item.
 
 ## Import into Notion
 
@@ -43,11 +43,19 @@ Alternatively import this Markdown file using Text & Markdown for a page organiz
 
 Notion import reference (checked 20 October 2026): https://www.notion.com/help/import-data-into-notion
 
+## Execution policy — local first
+
+Complete 1A–1D locally before starting 1E. This ordering overrides the blueprint's earlier staging-first sequence. V2–V4 remain future releases, not prerequisites for the V1 launch.
+
+Keep task IDs stable; follow section order and dependencies, not numeric ID order. Local Docker, PostgreSQL, Mailpit, security checks, and backup/restore exercises are development work and remain early. VPS provisioning, domain setup, live email delivery, production operations and deployment automation belong to 1E.
+
+If using an older Notion CSV/database, update its order and dependencies to match this checklist; the old CSV is not automatically synchronised.
+
 ## Definition of done
 
 Check an item only when its completion criterion is demonstrated, relevant failure paths are checked, and its evidence/PR or verification note is recorded. A release gate is a review of preceding work, not a substitute for it. Carry existing security, accessibility and recovery checks forward for every release. The approved stack remains React + ASP.NET Core + PostgreSQL on Contabo with Nginx, free-first for V1.
 
-## V1 — 59 tracking items
+## V1 — 62 tracking items
 
 ### 1A Foundation (Phase 0)
 
@@ -67,25 +75,9 @@ Check an item only when its completion criterion is demonstrated, relevant failu
   - Done when: Router, Tailwind/shadcn, Query, Hook Form/Zod and generated OpenAPI client work in a sample flow; Swagger UI serves the API's OpenAPI document in development for manual endpoint testing.
   - Area: Frontend/API tooling. Depends on: F03.
 
-- [ ] **F05 — Deploy staging on Contabo**
-  - Done when: Nginx serves built React and proxies API; DB is private; staging data/secrets are isolated.
-  - Area: Deployment. Depends on: F03.
-
-- [ ] **F06 — Configure HTTPS and host protection**
-  - Done when: TLS renewal tested; SSH/firewall and Docker port exposure checked; trusted proxy headers configured.
-  - Area: Security. Depends on: F05.
-
-- [ ] **F07 — Configure CI and release rollback**
-  - Done when: CI builds/tests; secrets excluded; immutable releases and a tested rollback procedure exist.
-  - Area: Engineering. Depends on: F05.
-
-- [ ] **F08 — Verify budget and service access**
-  - Done when: VPS/domain/payment access, free-tier limits and off-server backup target are recorded; no paid AI dependency.
-  - Area: Operations. Depends on: F01.
-
-- [ ] **F09 — Pass foundation milestone**
-  - Done when: Deployed UI reads the database; fresh local setup and rollback demonstrated.
-  - Area: Release gate. Depends on: F04;F06;F07;F08.
+- [ ] **F09 — Pass local foundation milestone**
+  - Done when: Fresh local setup, migrations, API/database listing, frontend conventions and local builds are demonstrated; resolve the outstanding F03 manual browser check. No deployed environment is required.
+  - Area: Local gate. Depends on: F01;F02;F03;F04.
 
 ### 1B Catalogue and imports (Phase 1)
 
@@ -227,14 +219,14 @@ Check an item only when its completion criterion is demonstrated, relevant failu
   - Done when: Applicant completes profile, understands uncertainty and manages an application plan independently.
   - Area: Release gate. Depends on: A07.
 
-### 1D Pilot and public release (Phase 3)
+### 1D Complete and validate V1 locally (Phase 3)
 
 - [ ] **N01 — Add durable notification outbox**
   - Done when: Transactional events, leases, retry limits and failed-delivery review survive restarts; import jobs cannot starve reminders.
   - Area: Notifications. Depends on: A08;D03.
 
-- [ ] **N02 — Configure transactional email delivery**
-  - Done when: Verified sending domain and SPF/DKIM/DMARC; idempotent sends, signed webhooks and bounce suppression work.
+- [ ] **N02 — Implement and test email delivery locally**
+  - Done when: Verification/reset/reminder emails reach Mailpit; idempotent send behaviour, webhook signature validation and bounce suppression are tested with provider fixtures or mocks. Live domain/provider activation is deferred to R01.
   - Area: Email. Depends on: N01.
 
 - [ ] **N03 — Build inbox and preferences**
@@ -249,13 +241,13 @@ Check an item only when its completion criterion is demonstrated, relevant failu
   - Done when: Missed reminders consolidated; ambiguous sends reviewed; authentication capacity reserved; quota delays visible.
   - Area: Notifications. Depends on: N04.
 
-- [ ] **O01 — Add health and error monitoring**
-  - Done when: Uptime, worker heartbeat, queue age, disk and rotated sanitized logs monitored; synthetic failure triggers an alert.
-  - Area: Operations. Depends on: F06;N01.
+- [ ] **O01 — Implement local health and error diagnostics**
+  - Done when: API health, worker heartbeat, queue age, disk checks and rotated sanitized logs are available; simulated failure exercises alert logic locally. Hosted monitoring activation is deferred to R02.
+  - Area: Operations. Depends on: N01.
 
-- [ ] **O02 — Automate encrypted off-server backups**
-  - Done when: Daily consistent DB backup plus key/config recovery material; retention and stale-backup alert configured.
-  - Area: Operations. Depends on: F08;C02.
+- [ ] **O02 — Implement encrypted backup tooling locally**
+  - Done when: Consistent DB backup plus key/config recovery material, retention and stale-backup checks run against an isolated local backup destination. Off-server scheduling is deferred to R02.
+  - Area: Operations. Depends on: C02.
 
 - [ ] **O03 — Test full restoration**
   - Done when: Restore isolated database/config/keys with mail disabled; ownership verified; recovery time and data-loss window recorded.
@@ -265,8 +257,8 @@ Check an item only when its completion criterion is demonstrated, relevant failu
   - Done when: User can export/delete data; retention and restore tombstones prevent deleted accounts silently returning.
   - Area: Privacy. Depends on: A08;O03.
 
-- [ ] **O05 — Publish privacy and support pages**
-  - Done when: Data use, independent-provider role, correction process, scope and support contact are clear.
+- [ ] **O05 — Build privacy and support pages locally**
+  - Done when: Pages describe data use, independent-provider role, correction process, scope and support contact; pages are accessible in the local app and reviewed before public deployment.
   - Area: Product. Depends on: O04.
 
 - [ ] **O06 — Run security regression checks**
@@ -281,9 +273,41 @@ Check an item only when its completion criterion is demonstrated, relevant failu
   - Done when: Isolated 50-user/15-minute workload plus 500 mock reminders; target p95 <700ms and <1% errors; no lost logical records.
   - Area: Performance. Depends on: N05;O01.
 
-- [ ] **O09 — Finish production runbook**
-  - Done when: Migrations, rollback, certificate renewal, secret handling, DB pools, resource limits and patch/restore steps documented.
-  - Area: Deployment. Depends on: O03;O06;O08.
+- [ ] **L01 — Accept complete V1 locally**
+  - Done when: Every task in 1A–1D passes with evidence; all projects build and relevant tests pass; fresh setup and complete applicant/editor/import/reminder journeys work locally; security, accessibility, load, export/deletion and isolated restore checks pass. Email uses Mailpit/mocks. Outstanding F03 visual verification is resolved.
+  - Area: Local release gate. Depends on: F09;C12;A08;N05;O03;O05;O06;O07;O08.
+
+### 1E Deployment, hosted verification and public release (last)
+
+Start only after L01. Deployment-specific verification must still pass on the real host; local checks do not replace it.
+
+- [ ] **F08 — Verify deployment budget and service access**
+  - Done when: After local acceptance, VPS/domain/payment access, free-tier limits and off-server backup target are recorded; no paid AI dependency.
+  - Area: Operations. Depends on: L01.
+
+- [ ] **F05 — Deploy completed V1 to staging on Contabo**
+  - Done when: Nginx serves built React and proxies API; database is private; staging data/secrets are isolated; completed local journeys run on staging.
+  - Area: Deployment. Depends on: F08.
+
+- [ ] **F06 — Configure HTTPS and host protection**
+  - Done when: TLS renewal tested; SSH/firewall and Docker port exposure checked; trusted proxy headers configured.
+  - Area: Security. Depends on: F05.
+
+- [ ] **F07 — Configure CI and release rollback**
+  - Done when: CI builds/tests; secrets excluded; immutable releases and a staging-tested rollback procedure exist. Local builds/tests already passed L01.
+  - Area: Engineering. Depends on: F06.
+
+- [ ] **R01 — Activate and verify live transactional email**
+  - Done when: Sending domain and SPF/DKIM/DMARC verified; provider credentials configured; controlled delivery, signed webhooks, bounce suppression and reminder behaviour verified on staging.
+  - Area: Email deployment. Depends on: F07;N02;N05.
+
+- [ ] **R02 — Activate production monitoring and off-server recovery**
+  - Done when: Hosted monitoring triggers a controlled alert; scheduled encrypted off-server backups and stale-backup alerts work; isolated restore of database/config/keys is demonstrated with mail disabled and recovery objectives recorded.
+  - Area: Operations deployment. Depends on: F07;O01;O03.
+
+- [ ] **O09 — Finish production runbook and staging acceptance**
+  - Done when: Migrations, rollback, TLS renewal, secrets, DB pools, resource limits and patch/restore steps documented; security, responsive journeys and O08 workload repeated on staging with mock notifications and any failures resolved.
+  - Area: Deployment. Depends on: R01;R02;O06;O07;O08.
 
 - [ ] **O10 — Observe 5–10 testers**
   - Done when: Five complete onboarding/save; target three returning users; confusing steps and critical data errors fixed.
