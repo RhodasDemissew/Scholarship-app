@@ -8,10 +8,30 @@ namespace Scholarship.Infrastructure.Persistence;
 public sealed class ScholarshipDbContext(DbContextOptions<ScholarshipDbContext> options) : IdentityDbContext<IdentityUser>(options)
 {
     public DbSet<OpportunityCycle> OpportunityCycles => Set<OpportunityCycle>();
+    public DbSet<Institution> Institutions => Set<Institution>();
+    public DbSet<Programme> Programmes => Set<Programme>();
+    public DbSet<FundingAward> FundingAwards => Set<FundingAward>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        var institution = modelBuilder.Entity<Institution>();
+        institution.HasIndex(x => x.Domain).IsUnique();
+        institution.Property(x => x.Domain).HasMaxLength(253);
+        institution.Property(x => x.Name).HasMaxLength(200);
+        institution.Property(x => x.Country).HasMaxLength(80);
+        var programme = modelBuilder.Entity<Programme>();
+        programme.HasIndex(x => new { x.InstitutionId, x.Key }).IsUnique();
+        programme.Property(x => x.Key).HasMaxLength(200);
+        programme.Property(x => x.Name).HasMaxLength(200);
+        programme.Property(x => x.OfficialUrl).HasMaxLength(2000);
+        programme.HasOne(x => x.Institution).WithMany().OnDelete(DeleteBehavior.Restrict);
+        var award = modelBuilder.Entity<FundingAward>();
+        award.HasIndex(x => x.Key).IsUnique();
+        award.Property(x => x.Key).HasMaxLength(300);
+        award.Property(x => x.Name).HasMaxLength(200);
+        award.Property(x => x.Sponsor).HasMaxLength(200);
+        award.Property(x => x.OfficialUrl).HasMaxLength(2000);
         var cycle = modelBuilder.Entity<OpportunityCycle>();
         cycle.ToTable("OpportunityCycles");
         cycle.HasKey(item => item.Id);
@@ -19,6 +39,16 @@ public sealed class ScholarshipDbContext(DbContextOptions<ScholarshipDbContext> 
         cycle.Property(item => item.InstitutionName).HasMaxLength(200).IsRequired();
         cycle.Property(item => item.IntakeLabel).HasMaxLength(80).IsRequired();
         cycle.Property(item => item.IsFictional).IsRequired();
+        cycle.Property(x => x.Round).HasMaxLength(80);
+        cycle.Property(x => x.PublicationStatus).HasConversion<string>().HasMaxLength(20);
+        cycle.Property(x => x.ApplicationStatus).HasConversion<string>().HasMaxLength(20);
+        cycle.Property(x => x.Version).IsConcurrencyToken();
+        cycle.HasOne(x => x.Programme).WithMany().OnDelete(DeleteBehavior.Restrict);
+        cycle.HasOne(x => x.FundingAward).WithMany().OnDelete(DeleteBehavior.Restrict);
+        cycle.HasIndex(x => new { x.ProgrammeId, x.FundingAwardId, x.IntakeLabel, x.Round }).IsUnique().AreNullsDistinct(false);
+        cycle.HasIndex(x => new { x.PublicationStatus, x.IntakeLabel });
+        institution.HasData(new Institution { Id = Guid.Parse("e40f60a3-e248-4498-a532-dfcdf56bd001"), Name = "Fictional Example University", Domain = "example.invalid", Country = "Fictional country" });
+        programme.HasData(new Programme { Id = Guid.Parse("e40f60a3-e248-4498-a532-dfcdf56bd002"), InstitutionId = Guid.Parse("e40f60a3-e248-4498-a532-dfcdf56bd001"), Name = "Example Master's Programme", Key = "EXAMPLE MASTERS", OfficialUrl = "https://example.invalid" });
 
         cycle.HasData(new OpportunityCycle
         {
@@ -26,7 +56,10 @@ public sealed class ScholarshipDbContext(DbContextOptions<ScholarshipDbContext> 
             Title = "Example Master's Scholarship",
             InstitutionName = "Fictional Example University",
             IntakeLabel = "2027 intake",
-            IsFictional = true
+            IsFictional = true,
+            ProgrammeId = Guid.Parse("e40f60a3-e248-4498-a532-dfcdf56bd002"),
+            PublicationStatus = PublicationStatus.Published,
+            Version = Guid.Parse("e40f60a3-e248-4498-a532-dfcdf56bd003")
         });
     }
 }

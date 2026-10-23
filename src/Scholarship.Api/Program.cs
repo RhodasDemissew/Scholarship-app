@@ -29,6 +29,7 @@ app.MapGet("/api/v1/opportunities", async (ScholarshipDbContext db, Cancellation
 {
     var opportunities = await db.OpportunityCycles
         .AsNoTracking()
+        .Where(cycle => cycle.PublicationStatus == Scholarship.Core.PublicationStatus.Published)
         .OrderBy(cycle => cycle.Title)
         .Select(cycle => new OpportunityResponse(
             cycle.Id,
