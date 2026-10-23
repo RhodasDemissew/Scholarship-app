@@ -4,6 +4,10 @@ Implementation blueprint • Version 1.2 • Updated 20 October 2026
 
 Revision: V1 now includes admin-assisted URL importing from 2–3 approved sources, mandatory review and manual entry fallback. React, Contabo VPS, Nginx, fluid responsive layouts and the free-first operating plan remain the foundation. V1 means Phases 0–3; automated discovery and scheduled change monitoring remain Phase 4.
 
+## Execution-order amendment — 23 October 2026
+
+The user's local-first decision supersedes staging-first sequencing elsewhere in this blueprint. Use `docs/checklist.md` as the authoritative task order: complete all V1 functionality and local security/accessibility/load/recovery checks in milestones 1A–1D, pass L01, then perform milestone 1E hosting, HTTPS, CI/release rollback, live email, production monitoring/off-server backups, hosted acceptance, pilot and release. F09 is a local foundation gate and does not require deployment. Local Docker services and Mailpit remain foundation tools. N02 and O01–O03 are implemented and tested locally; R01–R02 verify their live deployment. V2–V4 remain subsequent releases. Product scope and stack are unchanged.
+
 ## 1. Product decision
 
 Build a fully responsive web application for phones, tablets, laptops and large desktop displays that helps Ethiopian master's applicants discover relevant funding, understand published requirements, and complete preparation in the correct order.
