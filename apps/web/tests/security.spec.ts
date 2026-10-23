@@ -4,17 +4,7 @@ import { resolve } from 'node:path';
 import { createHmac } from 'node:crypto';
 import { mkdirSync } from 'node:fs';
 import { post, register, password } from './helpers';
-export function totp(secret: string) {
- const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
- const bits = [...secret.toUpperCase()].map(c => alphabet.indexOf(c).toString(2).padStart(5,'0')).join('');
- const key = Buffer.from(bits.match(/.{8}/g)!.map(b => parseInt(b,2)));
- const counter = Buffer.alloc(8); counter.writeBigUInt64BE(BigInt(Math.floor(Date.now()/30000)));
- const hash = createHmac('sha1',key).update(counter).digest(); const offset = hash[19]&15;
- return ((hash.readUInt32BE(offset)&0x7fffffff)%1000000).toString().padStart(6,'0');
-}
-export function grant(email: string, role: string) {
- execFileSync('dotnet', ['bin/Release/net10.0/Scholarship.Api.dll','--grant-role',email,role], { cwd: resolve('../../src/Scholarship.Api'), env: { ...process.env, ASPNETCORE_ENVIRONMENT:'Development' }, stdio:'pipe' });
-}
+import { totp, grant } from './security-helpers';
 test('C02 privileged access requires role and MFA; throttling', async ({ request: api }) => {
  expect((await api.get('/api/v1/editor/access')).status()).toBe(401);
  const email = await register(api, 'security');
@@ -42,4 +32,5 @@ test('C02 privileged access requires role and MFA; throttling', async ({ request
  mkdirSync('.local', { recursive: true });
  await api.storageState({ path: '.local/security-session.json' });
 });
+
 

@@ -11,6 +11,7 @@ export async function request<T = any>(path: string, method = 'GET', body?: unkn
   const error = await response.json().catch(() => ({}));
   throw new Error(error.title || (response.status === 401 ? 'Please sign in.' : response.status === 403 ? 'You do not have access.' : 'Request failed. Try again.'));
  }
- return response.status === 204 ? undefined as T : response.json();
+ const text = await response.text();
+ return text ? JSON.parse(text) as T : undefined as T;
 }
 

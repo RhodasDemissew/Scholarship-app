@@ -4,6 +4,8 @@ using Scholarship.Api;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
+builder.Services.ConfigureHttpJsonOptions(options => options.SerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter()));
+builder.WebHost.ConfigureKestrel(options => options.Limits.MaxRequestBodySize = 128 * 1024);
 Auth.Configure(builder);
 Security.Configure(builder);
 builder.Services.AddProblemDetails();
@@ -16,6 +18,7 @@ var app = builder.Build();
 app.UseExceptionHandler();
 Auth.Map(app);
 Security.Map(app);
+Editorial.Map(app);
 
 if (app.Environment.IsDevelopment())
 {

@@ -10,6 +10,268 @@
     }
   ],
   "paths": {
+    "/api/v1/auth/csrf": {
+      "get": {
+        "tags": [
+          "Scholarship.Api"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnonymousTypeOfstring"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/session": {
+      "get": {
+        "tags": [
+          "Scholarship.Api"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/register": {
+      "post": {
+        "tags": [
+          "Scholarship.Api"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Credentials"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/auth/resend": {
+      "post": {
+        "tags": [
+          "Scholarship.Api"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/auth/verify": {
+      "post": {
+        "tags": [
+          "Scholarship.Api"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TokenRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "tags": [
+          "Scholarship.Api"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Credentials"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/auth/logout": {
+      "post": {
+        "tags": [
+          "Scholarship.Api"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/auth/forgot": {
+      "post": {
+        "tags": [
+          "Scholarship.Api"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/auth/reset": {
+      "post": {
+        "tags": [
+          "Scholarship.Api"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/auth/two-factor": {
+      "post": {
+        "tags": [
+          "Scholarship.Api"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CodeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/auth/mfa/setup": {
+      "post": {
+        "tags": [
+          "Scholarship.Api"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/auth/mfa/enable": {
+      "post": {
+        "tags": [
+          "Scholarship.Api"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CodeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/editor/access": {
+      "get": {
+        "tags": [
+          "Scholarship.Api"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/admin/access": {
+      "get": {
+        "tags": [
+          "Scholarship.Api"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/health": {
       "get": {
         "tags": [
@@ -44,10 +306,502 @@
           }
         }
       }
+    },
+    "/api/v1/editor/opportunities": {
+      "get": {
+        "tags": [
+          "Scholarship.Api"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Scholarship.Api"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DraftInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogueView"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/editor/opportunities/{id}": {
+      "get": {
+        "tags": [
+          "Scholarship.Api"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogueView"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Scholarship.Api"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogueView"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/editor/opportunities/{id}/{action}": {
+      "post": {
+        "tags": [
+          "Scholarship.Api"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "action",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransitionInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogueView"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/editor/opportunities/{id}/audit": {
+      "get": {
+        "tags": [
+          "Scholarship.Api"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "AnonymousTypeOfstring": {
+        "required": [
+          "token"
+        ],
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "ApplicationStatus": {
+        "enum": [
+          "Unknown",
+          "Announced",
+          "Open",
+          "Closed",
+          "Withdrawn"
+        ]
+      },
+      "CatalogueView": {
+        "required": [
+          "id",
+          "version",
+          "publicationStatus",
+          "lastReviewedAt",
+          "draft"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "version": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "publicationStatus": {
+            "$ref": "#/components/schemas/PublicationStatus"
+          },
+          "lastReviewedAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "draft": {
+            "$ref": "#/components/schemas/DraftInput"
+          }
+        }
+      },
+      "CodeRequest": {
+        "required": [
+          "code"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          }
+        }
+      },
+      "Coverage": {
+        "enum": [
+          "Unknown",
+          "Covered",
+          "NotCovered"
+        ]
+      },
+      "Credentials": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "DeadlineInput": {
+        "required": [
+          "kind",
+          "originalText",
+          "precision",
+          "localDate",
+          "localTime",
+          "timeZone"
+        ],
+        "type": "object",
+        "properties": {
+          "kind": {
+            "$ref": "#/components/schemas/DeadlineKind"
+          },
+          "originalText": {
+            "type": "string"
+          },
+          "precision": {
+            "$ref": "#/components/schemas/DeadlinePrecision"
+          },
+          "localDate": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date"
+          },
+          "localTime": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "time"
+          },
+          "timeZone": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "DeadlineKind": {
+        "enum": [
+          "Admission",
+          "Scholarship",
+          "References",
+          "Documents"
+        ]
+      },
+      "DeadlinePrecision": {
+        "enum": [
+          "Unknown",
+          "Date",
+          "DateTime"
+        ]
+      },
+      "DraftInput": {
+        "required": [
+          "title",
+          "institutionName",
+          "domain",
+          "country",
+          "programmeName",
+          "programmeUrl",
+          "awardName",
+          "sponsor",
+          "awardUrl",
+          "intakeLabel",
+          "round",
+          "isFictional",
+          "applicationStatus",
+          "deadlines",
+          "funding",
+          "evidence"
+        ],
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "institutionName": {
+            "type": "string"
+          },
+          "domain": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "programmeName": {
+            "type": "string"
+          },
+          "programmeUrl": {
+            "type": "string"
+          },
+          "awardName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "sponsor": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "awardUrl": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "intakeLabel": {
+            "type": "string"
+          },
+          "round": {
+            "type": "string"
+          },
+          "isFictional": {
+            "type": "boolean"
+          },
+          "applicationStatus": {
+            "$ref": "#/components/schemas/ApplicationStatus"
+          },
+          "deadlines": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeadlineInput"
+            }
+          },
+          "funding": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FundingInput"
+            }
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EvidenceInput"
+            }
+          }
+        }
+      },
+      "EmailRequest": {
+        "required": [
+          "email"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "EvidenceInput": {
+        "required": [
+          "field",
+          "sourceUrl",
+          "excerpt"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "type": "string"
+          },
+          "sourceUrl": {
+            "type": "string"
+          },
+          "excerpt": {
+            "type": "string"
+          }
+        }
+      },
+      "FundingInput": {
+        "required": [
+          "kind",
+          "coverage",
+          "amount",
+          "currency",
+          "conditions"
+        ],
+        "type": "object",
+        "properties": {
+          "kind": {
+            "$ref": "#/components/schemas/FundingKind"
+          },
+          "coverage": {
+            "$ref": "#/components/schemas/Coverage"
+          },
+          "amount": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
+            "type": [
+              "null",
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
+          "currency": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "conditions": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "FundingKind": {
+        "enum": [
+          "Tuition",
+          "Stipend",
+          "Travel",
+          "Insurance",
+          "Visa",
+          "Other"
+        ]
+      },
       "OpportunityResponse": {
         "required": [
           "id",
@@ -73,6 +827,102 @@
           },
           "isFictional": {
             "type": "boolean"
+          }
+        }
+      },
+      "PublicationStatus": {
+        "enum": [
+          "Draft",
+          "InReview",
+          "Reviewed",
+          "Published",
+          "Archived"
+        ]
+      },
+      "ResetRequest": {
+        "required": [
+          "email",
+          "token",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "SessionResponse": {
+        "required": [
+          "authenticated",
+          "email",
+          "roles"
+        ],
+        "type": "object",
+        "properties": {
+          "authenticated": {
+            "type": "boolean"
+          },
+          "email": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "TokenRequest": {
+        "required": [
+          "email",
+          "token"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "TransitionInput": {
+        "required": [
+          "version"
+        ],
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "UpdateInput": {
+        "required": [
+          "version",
+          "draft"
+        ],
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "draft": {
+            "$ref": "#/components/schemas/DraftInput"
           }
         }
       }

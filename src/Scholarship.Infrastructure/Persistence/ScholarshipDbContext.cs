@@ -11,10 +11,12 @@ public sealed class ScholarshipDbContext(DbContextOptions<ScholarshipDbContext> 
     public DbSet<Institution> Institutions => Set<Institution>();
     public DbSet<Programme> Programmes => Set<Programme>();
     public DbSet<FundingAward> FundingAwards => Set<FundingAward>();
+    public DbSet<AuditEvent> AuditEvents => Set<AuditEvent>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<AuditEvent>().HasIndex(x => new { x.CycleId, x.At });
         var deadline = modelBuilder.Entity<Deadline>();
         deadline.HasIndex(x => new { x.OpportunityCycleId, x.Kind }).IsUnique();
         deadline.Property(x => x.Kind).HasConversion<string>();
