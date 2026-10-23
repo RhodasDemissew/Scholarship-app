@@ -1,4 +1,4 @@
-# Scholarship Assistant — Version Checklist
+﻿# Scholarship Assistant — Version Checklist
 
 Prepared 20 October 2026 from Implementation Blueprint revision 1.2. Product releases below are distinct from the blueprint document's revision number. Existing completion marks are preserved. Execution order revised 23 October 2026: finish V1 locally before deployment.
 
@@ -83,7 +83,7 @@ Foundation evidence (23 October 2026): [F01 report](f01-report.md), [F04 report]
 
 ### 1B Catalogue and imports (Phase 1)
 
-- [ ] **C01 — Implement signup and secure sessions**
+- [x] **C01 — Implement signup and secure sessions**
   - Done when: Identity cookies, verification, login/logout and reset work; React sends CSRF tokens on unsafe requests.
   - Area: Accounts. Depends on: F09.
 
@@ -471,3 +471,4 @@ These are recurring responsibilities, not one-time release features. Add repeati
 ## Explicitly outside the launch scope
 
 Universal scraping, automatic submissions, paid AI/SMS, applicant file uploads, essay generation, native mobile apps, Kubernetes and payment collection are not V1 requirements. Source URLs still need to be found by the maintainer in V1; the importer reduces data entry but does not automatically discover the web.
+

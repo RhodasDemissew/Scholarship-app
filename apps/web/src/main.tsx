@@ -1,4 +1,4 @@
-import { StrictMode, useState } from 'react';
+﻿import { StrictMode, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, NavLink, Link, Route, Routes } from 'react-router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useOpportunities } from '@/lib/api';
 import './style.css';
+import { Account } from './auth';
 const searchSchema = z.object({ search: z.string().trim().max(80, 'Use 80 characters or fewer.') });
 const queryClient = new QueryClient();
 function Opportunities() {
@@ -39,10 +40,12 @@ function Opportunities() {
  </>;
 }
 function App() {
- return <><a className="skip-link" href="#main">Skip to content</a><header className="border-b border-slate-200 bg-white"><div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-6 py-5"><Link to="/" className="font-bold text-teal-900">Scholarship Assistant</Link><nav aria-label="Main navigation" className="flex gap-5 text-sm"><NavLink to="/" end>Opportunities</NavLink><NavLink to="/about">About this preview</NavLink></nav></div></header><main id="main" tabIndex={-1} className="mx-auto max-w-3xl px-6 py-12"><Routes>
+ return <><a className="skip-link" href="#main">Skip to content</a><header className="border-b border-slate-200 bg-white"><div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-6 py-5"><Link to="/" className="font-bold text-teal-900">Scholarship Assistant</Link><nav aria-label="Main navigation" className="flex gap-5 text-sm"><NavLink to="/" end>Opportunities</NavLink><NavLink to="/about">About this preview</NavLink><NavLink to="/account">Account</NavLink></nav></div></header><main id="main" tabIndex={-1} className="mx-auto max-w-3xl px-6 py-12"><Routes>
  <Route path="/" element={<Opportunities />} />
+ {['register','login','verify','forgot','reset','account','resend'].map(path => <Route key={path} path={'/' + path} element={<Account key={path} />} />)}
  <Route path="/about" element={<><p className="eyebrow">Small steps, solid foundations</p><h1>Your scholarship companion, in progress.</h1><div className="panel mt-6 space-y-4"><p>This preview lets you browse and search a fictional listing. Nothing entered in the search form is saved.</p><p>Real opportunities, accounts and application tracking will arrive in later milestones.</p><Button asChild><Link to="/">Explore the sample</Link></Button></div></>} />
  <Route path="*" element={<><h1>Page not found</h1><p className="my-5">This page isn't part of the preview.</p><Button asChild><Link to="/">Back to opportunities</Link></Button></>} />
  </Routes></main><footer className="mx-auto max-w-3xl px-6 pb-8 text-sm text-slate-500">Local preview · Fictional data only</footer></>;
 }
 createRoot(document.getElementById('root')!).render(<StrictMode><QueryClientProvider client={queryClient}><BrowserRouter><App /></BrowserRouter></QueryClientProvider></StrictMode>);
+

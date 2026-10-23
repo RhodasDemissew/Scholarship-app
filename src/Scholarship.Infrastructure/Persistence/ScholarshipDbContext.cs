@@ -1,14 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using Scholarship.Core;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Scholarship.Infrastructure.Persistence;
 
-public sealed class ScholarshipDbContext(DbContextOptions<ScholarshipDbContext> options) : DbContext(options)
+public sealed class ScholarshipDbContext(DbContextOptions<ScholarshipDbContext> options) : IdentityDbContext<IdentityUser>(options)
 {
     public DbSet<OpportunityCycle> OpportunityCycles => Set<OpportunityCycle>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
         var cycle = modelBuilder.Entity<OpportunityCycle>();
         cycle.ToTable("OpportunityCycles");
         cycle.HasKey(item => item.Id);

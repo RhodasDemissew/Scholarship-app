@@ -1,0 +1,33 @@
+import { test, expect } from '@playwright/test';
+import { post, mailLink, password } from './helpers';
+
+test('C01 verification, session cookie, CSRF, reset reuse and logout', async ({ request: api, page }) => {
+ const email = `account-${Date.now()}@example.test`;
+ expect((await api.post('/api/v1/auth/register', { data: { email, password } })).status()).toBe(400);
+ expect((await post(api, '/api/v1/auth/register', { email, password })).ok()).toBeTruthy();
+ expect((await post(api, '/api/v1/auth/login', { email, password })).status()).toBe(401);
+ const verify = await mailLink(api, email, 'verify');
+ expect((await post(api, '/api/v1/auth/verify', { email, token: verify.searchParams.get('token') })).ok()).toBeTruthy();
+ expect((await post(api, '/api/v1/auth/login', { email, password })).ok()).toBeTruthy();
+ const state = await api.storageState();
+ expect(state.cookies.find(c => c.name === 'scholarship.session')).toMatchObject({ httpOnly: true, sameSite: 'Strict' });
+ expect((await (await api.get('/api/v1/auth/session')).json()).authenticated).toBe(true);
+ expect((await api.post('/api/v1/auth/logout')).status()).toBe(400);
+ expect((await post(api, '/api/v1/auth/forgot', { email })).ok()).toBeTruthy();
+ const reset = await mailLink(api, email, 'reset');
+ const data = { email, token: reset.searchParams.get('token'), password: password + 'New' };
+ expect((await post(api, '/api/v1/auth/reset', data)).ok()).toBeTruthy();
+ expect((await (await api.get('/api/v1/auth/session')).json()).authenticated).toBe(false);
+ expect((await post(api, '/api/v1/auth/reset', data)).status()).toBe(400);
+ expect((await post(api, '/api/v1/auth/login', { email, password })).status()).toBe(401);
+ expect((await post(api, '/api/v1/auth/login', { email, password: data.password })).ok()).toBeTruthy();
+ expect((await post(api, '/api/v1/auth/logout')).status()).toBe(204);
+ expect((await (await api.get('/api/v1/auth/session')).json()).authenticated).toBe(false);
+ await page.goto('/login');
+ await page.getByLabel('Email', { exact: true }).fill(email);
+ await page.getByLabel('Password', { exact: true }).fill(data.password);
+ await page.getByRole('button', { name: 'Welcome back' }).click();
+ await expect(page.getByText('You are signed in.', { exact: true })).toBeVisible();
+ await page.getByRole('button', { name: 'Sign out' }).click();
+ await expect(page.getByText('Signed out.', { exact: true })).toBeVisible();
+});

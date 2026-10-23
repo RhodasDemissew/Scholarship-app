@@ -1,14 +1,19 @@
 using Microsoft.EntityFrameworkCore;
 using Scholarship.Infrastructure.Persistence;
+using Scholarship.Api;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
+Auth.Configure(builder);
+builder.Services.AddProblemDetails();
 builder.Services.AddDbContext<ScholarshipDbContext>(options =>
     options.UseNpgsql(
         builder.Configuration.GetConnectionString("ScholarshipDb"),
         npgsql => npgsql.MigrationsAssembly(typeof(ScholarshipDbContext).Assembly.FullName)));
 
 var app = builder.Build();
+app.UseExceptionHandler();
+Auth.Map(app);
 
 if (app.Environment.IsDevelopment())
 {
