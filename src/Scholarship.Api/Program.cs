@@ -1,10 +1,14 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Scholarship.Infrastructure.Persistence;
 using Scholarship.Api;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
-builder.Services.ConfigureHttpJsonOptions(options => options.SerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter()));
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter(allowIntegerValues: false));
+    options.SerializerOptions.NumberHandling = System.Text.Json.Serialization.JsonNumberHandling.Strict;
+});
 builder.WebHost.ConfigureKestrel(options => options.Limits.MaxRequestBodySize = 128 * 1024);
 Auth.Configure(builder);
 Security.Configure(builder);
@@ -28,29 +32,9 @@ if (app.Environment.IsDevelopment())
 
 app.MapGet("/health", () => Results.Ok(new { status = "healthy" }));
 
-app.MapGet("/api/v1/opportunities", async (ScholarshipDbContext db, CancellationToken cancellationToken) =>
-{
-    var opportunities = await db.OpportunityCycles
-        .AsNoTracking()
-        .Where(cycle => cycle.PublicationStatus == Scholarship.Core.PublicationStatus.Published)
-        .OrderBy(cycle => cycle.Title)
-        .Select(cycle => new OpportunityResponse(
-            cycle.Id,
-            cycle.Title,
-            cycle.InstitutionName,
-            cycle.IntakeLabel,
-            cycle.IsFictional))
-        .ToListAsync(cancellationToken);
-
-    return TypedResults.Ok(opportunities);
-}).WithName("ListOpportunities");
+PublicCatalogue.Map(app);
 
 if (await Security.Initialize(app, args)) return;
 app.Run();
 
-internal sealed record OpportunityResponse(
-    Guid Id,
-    string Title,
-    string InstitutionName,
-    string IntakeLabel,
-    bool IsFictional);
+

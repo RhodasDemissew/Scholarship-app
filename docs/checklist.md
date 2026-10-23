@@ -107,7 +107,7 @@ Foundation evidence (23 October 2026): [F01 report](f01-report.md), [F04 report]
   - Done when: Three real programme/award/intake records checked against official sources; uncertain facts remain flagged.
   - Area: Catalogue. Depends on: C05.
 
-- [ ] **C07 — Build explorer and opportunity detail**
+- [x] **C07 — Build explorer and opportunity detail**
   - Done when: Paginated filters, coverage, official links, source evidence, opening state and last-reviewed date displayed.
   - Area: Frontend. Depends on: C05.
 
@@ -471,6 +471,7 @@ These are recurring responsibilities, not one-time release features. Add repeati
 ## Explicitly outside the launch scope
 
 Universal scraping, automatic submissions, paid AI/SMS, applicant file uploads, essay generation, native mobile apps, Kubernetes and payment collection are not V1 requirements. Source URLs still need to be found by the maintainer in V1; the importer reduces data entry but does not automatically discover the web.
+
 
 
 

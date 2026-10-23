@@ -530,6 +530,41 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/opportunities/filters": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["CatalogueFilters"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/opportunities": {
         parameters: {
             query?: never;
@@ -538,6 +573,22 @@ export interface paths {
             cookie?: never;
         };
         get: operations["ListOpportunities"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/opportunities/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["OpportunityDetail"];
         put?: never;
         post?: never;
         delete?: never;
@@ -750,6 +801,19 @@ export interface components {
         };
         /** @enum {unknown} */
         ApplicationStatus: "Unknown" | "Announced" | "Open" | "Closed" | "Withdrawn";
+        CatalogueFilters: {
+            countries: string[];
+            intakes: string[];
+        };
+        CataloguePage: {
+            items: components["schemas"]["OpportunitySummary"][];
+            /** Format: int32 */
+            total: number;
+            /** Format: int32 */
+            page: number;
+            /** Format: int32 */
+            pageSize: number;
+        };
         CatalogueView: {
             /** Format: uuid */
             id: string;
@@ -813,19 +877,25 @@ export interface components {
             kind: components["schemas"]["FundingKind"];
             coverage: components["schemas"]["Coverage"];
             /** Format: double */
-            amount: null | number | string;
+            amount: null | number;
             currency: null | string;
             conditions: null | string;
         };
         /** @enum {unknown} */
         FundingKind: "Tuition" | "Stipend" | "Travel" | "Insurance" | "Visa" | "Other";
-        OpportunityResponse: {
+        OpportunitySummary: {
             /** Format: uuid */
             id: string;
             title: string;
             institutionName: string;
+            country: string;
             intakeLabel: string;
             isFictional: boolean;
+            applicationStatus: components["schemas"]["ApplicationStatus"];
+            /** Format: date-time */
+            lastReviewedAt: null | string;
+            tuition: components["schemas"]["Coverage"];
+            stipend: components["schemas"]["Coverage"];
         };
         /** @enum {unknown} */
         PublicationStatus: "Draft" | "InReview" | "Reviewed" | "Published" | "Archived";
@@ -863,7 +933,16 @@ export type $defs = Record<string, never>;
 export interface operations {
     ListOpportunities: {
         parameters: {
-            query?: never;
+            query?: {
+                q?: string;
+                country?: string;
+                intake?: string;
+                status?: components["schemas"]["ApplicationStatus"];
+                tuition?: components["schemas"]["Coverage"];
+                fictional?: boolean;
+                page?: number;
+                pageSize?: number;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -876,7 +955,29 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["OpportunityResponse"][];
+                    "application/json": components["schemas"]["CataloguePage"];
+                };
+            };
+        };
+    };
+    OpportunityDetail: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CatalogueView"];
                 };
             };
         };

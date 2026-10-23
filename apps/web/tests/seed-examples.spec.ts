@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+﻿import { test, expect } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 import { editor } from './security-helpers';
 import { post } from './helpers';
@@ -21,5 +21,6 @@ test('C06 explicitly seed three reviewed official-source examples through editor
   expect(item.lastReviewedAt).not.toBeNull();
  }
  const published=await (await api.get('/api/v1/opportunities')).json();
- expect(published.filter((x:any)=>!x.isFictional)).toHaveLength(3);
+ expect(published.items.filter((x:any)=>!x.isFictional)).toHaveLength(3);
 });
+
