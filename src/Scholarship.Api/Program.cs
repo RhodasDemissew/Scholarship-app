@@ -33,6 +33,7 @@ if (app.Environment.IsDevelopment())
 app.MapGet("/health", () => Results.Ok(new { status = "healthy" }));
 
 PublicCatalogue.Map(app);
+ApplicantActions.Map(app);
 
 if (await Security.Initialize(app, args)) return;
 app.Run();

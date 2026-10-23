@@ -414,6 +414,36 @@ namespace Scholarship.Infrastructure.Persistence.Migrations
                     b.ToTable("FundingComponent");
                 });
 
+            modelBuilder.Entity("Scholarship.Core.InformationReport", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("CycleId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CycleId");
+
+                    b.HasIndex("UserId", "CreatedAt");
+
+                    b.ToTable("InformationReports");
+                });
+
             modelBuilder.Entity("Scholarship.Core.Institution", b =>
                 {
                     b.Property<Guid>("Id")
@@ -580,6 +610,24 @@ namespace Scholarship.Infrastructure.Persistence.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Scholarship.Core.SavedOpportunity", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("CycleId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("SavedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("UserId", "CycleId");
+
+                    b.HasIndex("CycleId");
+
+                    b.ToTable("SavedOpportunities");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -658,6 +706,23 @@ namespace Scholarship.Infrastructure.Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Scholarship.Core.InformationReport", b =>
+                {
+                    b.HasOne("Scholarship.Core.OpportunityCycle", "Cycle")
+                        .WithMany()
+                        .HasForeignKey("CycleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cycle");
+                });
+
             modelBuilder.Entity("Scholarship.Core.OpportunityCycle", b =>
                 {
                     b.HasOne("Scholarship.Core.FundingAward", "FundingAward")
@@ -685,6 +750,23 @@ namespace Scholarship.Infrastructure.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Institution");
+                });
+
+            modelBuilder.Entity("Scholarship.Core.SavedOpportunity", b =>
+                {
+                    b.HasOne("Scholarship.Core.OpportunityCycle", "Cycle")
+                        .WithMany()
+                        .HasForeignKey("CycleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cycle");
                 });
 
             modelBuilder.Entity("Scholarship.Core.OpportunityCycle", b =>

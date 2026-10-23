@@ -12,10 +12,19 @@ public sealed class ScholarshipDbContext(DbContextOptions<ScholarshipDbContext> 
     public DbSet<Programme> Programmes => Set<Programme>();
     public DbSet<FundingAward> FundingAwards => Set<FundingAward>();
     public DbSet<AuditEvent> AuditEvents => Set<AuditEvent>();
+    public DbSet<SavedOpportunity> SavedOpportunities => Set<SavedOpportunity>();
+    public DbSet<InformationReport> InformationReports => Set<InformationReport>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<SavedOpportunity>().HasKey(x => new { x.UserId, x.CycleId });
+        modelBuilder.Entity<SavedOpportunity>().HasOne(x => x.Cycle).WithMany().HasForeignKey(x => x.CycleId);
+        modelBuilder.Entity<SavedOpportunity>().HasOne<IdentityUser>().WithMany().HasForeignKey(x => x.UserId);
+        modelBuilder.Entity<InformationReport>().HasOne(x => x.Cycle).WithMany().HasForeignKey(x => x.CycleId);
+        modelBuilder.Entity<InformationReport>().HasOne<IdentityUser>().WithMany().HasForeignKey(x => x.UserId);
+        modelBuilder.Entity<InformationReport>().Property(x => x.Message).HasMaxLength(1000);
+        modelBuilder.Entity<InformationReport>().HasIndex(x => new { x.UserId, x.CreatedAt });
         modelBuilder.Entity<AuditEvent>().HasIndex(x => new { x.CycleId, x.At });
         var deadline = modelBuilder.Entity<Deadline>();
         deadline.HasIndex(x => new { x.OpportunityCycleId, x.Kind }).IsUnique();

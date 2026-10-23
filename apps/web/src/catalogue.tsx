@@ -1,5 +1,6 @@
 ﻿import { useQuery } from '@tanstack/react-query';
 import { request } from '@/lib/http';
+import { OpportunityActions } from './saved';
 import { Link, useParams, useSearchParams } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -39,11 +40,12 @@ export function OpportunityDetail() {
  return <><Link className="underline" to="/">Back to opportunities</Link><div className="mt-6 flex flex-wrap gap-3"><span className="badge">{d.isFictional?'Fictional demo':d.applicationStatus}</span><span>{d.country} · {d.intakeLabel}</span></div><h1 className="mt-4">{d.title}</h1><p className="intro">{d.institutionName} · {d.programmeName}</p><p className="mt-4 text-sm text-slate-600"><ReviewDate value={item.lastReviewedAt}/></p>
  {d.isFictional&&<aside className="notice">Fictional example. This is not a scholarship you can apply for.</aside>}
  <div className="my-6 flex flex-wrap gap-3">{!d.isFictional&&<><Button asChild><a href={d.programmeUrl} target="_blank" rel="noopener noreferrer">Official programme ↗</a></Button>{d.awardUrl&&<Button asChild variant="outline"><a href={d.awardUrl} target="_blank" rel="noopener noreferrer">Official funding ↗</a></Button>}</>}</div>
- <section className="panel my-6"><h2>Deadlines and uncertainty</h2>{d.deadlines.length===0?<p className="mt-3">Deadline not verified. Check the provider.</p>:d.deadlines.map(deadline=><div className="mt-5 border-t pt-4" key={deadline.kind}><h3 className="font-semibold">{deadline.kind}</h3><p className="mt-2 whitespace-pre-wrap">{deadline.originalText}</p><p className="mt-2 text-sm text-slate-600">{deadline.precision==='Unknown'?'Needs confirmation — no precise date is asserted.':deadline.precision==='Date'?'Date only — closing time and timezone are unconfirmed.':deadline.timeZone?'Source timezone: '+deadline.timeZone:'Local time supplied, timezone unconfirmed.'}</p></div>)}</section>
+ {!d.isFictional && <OpportunityActions id={id}/>}<section className="panel my-6"><h2>Deadlines and uncertainty</h2>{d.deadlines.length===0?<p className="mt-3">Deadline not verified. Check the provider.</p>:d.deadlines.map(deadline=><div className="mt-5 border-t pt-4" key={deadline.kind}><h3 className="font-semibold">{deadline.kind}</h3><p className="mt-2 whitespace-pre-wrap">{deadline.originalText}</p><p className="mt-2 text-sm text-slate-600">{deadline.precision==='Unknown'?'Needs confirmation — no precise date is asserted.':deadline.precision==='Date'?'Date only — closing time and timezone are unconfirmed.':deadline.timeZone?'Source timezone: '+deadline.timeZone:'Local time supplied, timezone unconfirmed.'}</p></div>)}</section>
  <section className="panel my-6"><h2>Funding breakdown</h2><p className="mt-2 text-sm text-slate-600">Unknown means not verified, not excluded. Coverage applies only if the scholarship is awarded.</p><dl className="mt-4 grid gap-4 sm:grid-cols-2">{d.funding.map(f=><div key={f.kind} className="rounded-lg bg-slate-50 p-4"><dt className="font-semibold">{f.kind}</dt><dd>{f.coverage==='NotCovered'?'Not covered':f.coverage}{f.amount!=null&&' · '+f.amount+' '+f.currency}<p className="mt-2 text-sm text-slate-600">{f.conditions}</p></dd></div>)}</dl></section>
  <section className="panel my-6"><h2>Source evidence</h2><p className="mt-2 text-sm text-slate-600">Short quotations or labeled reviewer summaries. Follow the source for full requirements.</p>{d.evidence.map((e,i)=><div key={i} className="mt-5 border-t pt-4"><h3 className="font-semibold">{e.field.replace('.',' · ')}</h3><p className="my-2 whitespace-pre-wrap">{e.excerpt}</p><a className="break-all text-sm text-teal-800 underline" href={e.sourceUrl} target="_blank" rel="noopener noreferrer">{new URL(e.sourceUrl).hostname} — official source ↗</a></div>)}</section>
  </>;
 }
+
 
 
 

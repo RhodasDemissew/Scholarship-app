@@ -17,7 +17,7 @@ export function Editor() {
  const item=useQuery({queryKey:['editor',id],queryFn:()=>request<View>('/api/v1/editor/opportunities/'+id),enabled:access.isSuccess && !!id && id!=='new'});
  if(access.isPending) return <p role="status">Checking editor access...</p>;
  if(access.isError) return <div className="panel"><h1>Editor access required</h1><p className="my-4">Sign in with an Editor or Administrator account and complete authenticator verification.</p><Link to="/security">Account security</Link></div>;
- if(!id) return <><h1>Editorial workspace</h1><p className="intro">Review sources before publishing. Drafts stay private.</p><Button className="my-6" onClick={()=>navigate('/editor/new')}>Create draft</Button>{list.error && <p role="alert">{list.error.message}</p>}<div className="space-y-3">{list.data?.map(c=><Link className="panel block" key={c.id} to={'/editor/'+c.id}><h2>{c.title}</h2><p>{c.publicationStatus}</p></Link>)}</div></>;
+ if(!id) return <><h1>Editorial workspace</h1><Link to="/editor/reports" className="mt-4 inline-block underline">Review information reports</Link><p className="intro">Review sources before publishing. Drafts stay private.</p><Button className="my-6" onClick={()=>navigate('/editor/new')}>Create draft</Button>{list.error && <p role="alert">{list.error.message}</p>}<div className="space-y-3">{list.data?.map(c=><Link className="panel block" key={c.id} to={'/editor/'+c.id}><h2>{c.title}</h2><p>{c.publicationStatus}</p></Link>)}</div></>;
  if(id==='new') return <EditorForm key="new" initial={blank}/>;
  if(item.isPending) return <p role="status">Loading draft...</p>;
  if(item.error) return <p role="alert">{item.error.message}</p>;
@@ -65,6 +65,7 @@ function EditorForm({ initial, record }: {initial:Draft; record?:View}) {
  {record && <section className="panel mt-8"><h2>Audit history</h2>{audit.data?.map((a,i)=><p className="mt-2 text-sm" key={i}>{new Date(a.at).toLocaleString()} · {a.action} → {a.newStatus}{a.changedFields && ' · '+a.changedFields}</p>)}</section>}
  </>;
 }
+
 
 
 

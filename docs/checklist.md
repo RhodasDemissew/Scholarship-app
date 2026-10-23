@@ -111,7 +111,7 @@ Foundation evidence (23 October 2026): [F01 report](f01-report.md), [F04 report]
   - Done when: Paginated filters, coverage, official links, source evidence, opening state and last-reviewed date displayed.
   - Area: Frontend. Depends on: C05.
 
-- [ ] **C08 — Add saves and error reports**
+- [x] **C08 — Add saves and error reports**
   - Done when: Save/unsave is user-owned and idempotent; applicant can flag incorrect information.
   - Area: Applications. Depends on: C07;C01.
 
@@ -471,6 +471,7 @@ These are recurring responsibilities, not one-time release features. Add repeati
 ## Explicitly outside the launch scope
 
 Universal scraping, automatic submissions, paid AI/SMS, applicant file uploads, essay generation, native mobile apps, Kubernetes and payment collection are not V1 requirements. Source URLs still need to be found by the maintainer in V1; the importer reduces data entry but does not automatically discover the web.
+
 
 
 
