@@ -218,6 +218,90 @@ namespace Scholarship.Infrastructure.Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Scholarship.Core.Deadline", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset?>("InstantUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Kind")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateOnly?>("LocalDate")
+                        .HasColumnType("date");
+
+                    b.Property<TimeOnly?>("LocalTime")
+                        .HasColumnType("time without time zone");
+
+                    b.Property<Guid>("OpportunityCycleId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("OriginalText")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<string>("Precision")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("TimeZone")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<Guid>("Version")
+                        .IsConcurrencyToken()
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OpportunityCycleId", "Kind")
+                        .IsUnique();
+
+                    b.ToTable("Deadline");
+                });
+
+            modelBuilder.Entity("Scholarship.Core.FieldEvidence", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Excerpt")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<string>("Field")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("character varying(80)");
+
+                    b.Property<Guid>("OpportunityCycleId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset?>("ReviewedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ReviewerId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("SourceUrl")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OpportunityCycleId", "Field");
+
+                    b.ToTable("FieldEvidence");
+                });
+
             modelBuilder.Entity("Scholarship.Core.FundingAward", b =>
                 {
                     b.Property<Guid>("Id")
@@ -250,6 +334,43 @@ namespace Scholarship.Infrastructure.Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("FundingAwards");
+                });
+
+            modelBuilder.Entity("Scholarship.Core.FundingComponent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal?>("Amount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<string>("Conditions")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<string>("Coverage")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Currency")
+                        .HasMaxLength(3)
+                        .HasColumnType("character varying(3)");
+
+                    b.Property<string>("Kind")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("OpportunityCycleId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OpportunityCycleId", "Kind")
+                        .IsUnique();
+
+                    b.ToTable("FundingComponent");
                 });
 
             modelBuilder.Entity("Scholarship.Core.Institution", b =>
@@ -469,6 +590,33 @@ namespace Scholarship.Infrastructure.Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Scholarship.Core.Deadline", b =>
+                {
+                    b.HasOne("Scholarship.Core.OpportunityCycle", null)
+                        .WithMany("Deadlines")
+                        .HasForeignKey("OpportunityCycleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Scholarship.Core.FieldEvidence", b =>
+                {
+                    b.HasOne("Scholarship.Core.OpportunityCycle", null)
+                        .WithMany("Evidence")
+                        .HasForeignKey("OpportunityCycleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Scholarship.Core.FundingComponent", b =>
+                {
+                    b.HasOne("Scholarship.Core.OpportunityCycle", null)
+                        .WithMany("Funding")
+                        .HasForeignKey("OpportunityCycleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Scholarship.Core.OpportunityCycle", b =>
                 {
                     b.HasOne("Scholarship.Core.FundingAward", "FundingAward")
@@ -496,6 +644,15 @@ namespace Scholarship.Infrastructure.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Institution");
+                });
+
+            modelBuilder.Entity("Scholarship.Core.OpportunityCycle", b =>
+                {
+                    b.Navigation("Deadlines");
+
+                    b.Navigation("Evidence");
+
+                    b.Navigation("Funding");
                 });
 #pragma warning restore 612, 618
         }

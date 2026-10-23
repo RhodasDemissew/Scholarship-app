@@ -16,4 +16,7 @@ public sealed class OpportunityCycle
     public ApplicationStatus ApplicationStatus { get; set; } = ApplicationStatus.Unknown;
     public Guid Version { get; set; } = Guid.NewGuid();
     public DateTimeOffset? LastReviewedAt { get; set; }
+    public List<Deadline> Deadlines { get; set; } = [];
+    public List<FundingComponent> Funding { get; set; } = [];
+    public List<FieldEvidence> Evidence { get; set; } = [];
 }

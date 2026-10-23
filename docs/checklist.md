@@ -95,7 +95,7 @@ Foundation evidence (23 October 2026): [F01 report](f01-report.md), [F04 report]
   - Done when: Institution/programme/award/cycle models prevent duplicate identities and retain separate publication/opening states.
   - Area: Database. Depends on: F09.
 
-- [ ] **C04 — Store deadlines and funding evidence**
+- [x] **C04 — Store deadlines and funding evidence**
   - Done when: Original deadline wording, precision and timezone retained; tuition/stipend/travel etc. use explicit unknown states.
   - Area: Catalogue. Depends on: C03.
 
@@ -471,6 +471,7 @@ These are recurring responsibilities, not one-time release features. Add repeati
 ## Explicitly outside the launch scope
 
 Universal scraping, automatic submissions, paid AI/SMS, applicant file uploads, essay generation, native mobile apps, Kubernetes and payment collection are not V1 requirements. Source URLs still need to be found by the maintainer in V1; the importer reduces data entry but does not automatically discover the web.
+
 
 
 

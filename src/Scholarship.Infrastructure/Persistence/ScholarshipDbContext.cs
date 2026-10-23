@@ -15,6 +15,25 @@ public sealed class ScholarshipDbContext(DbContextOptions<ScholarshipDbContext> 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        var deadline = modelBuilder.Entity<Deadline>();
+        deadline.HasIndex(x => new { x.OpportunityCycleId, x.Kind }).IsUnique();
+        deadline.Property(x => x.Kind).HasConversion<string>();
+        deadline.Property(x => x.Precision).HasConversion<string>();
+        deadline.Property(x => x.OriginalText).HasMaxLength(2000);
+        deadline.Property(x => x.TimeZone).HasMaxLength(100);
+        deadline.Property(x => x.Version).IsConcurrencyToken();
+        var funding = modelBuilder.Entity<FundingComponent>();
+        funding.HasIndex(x => new { x.OpportunityCycleId, x.Kind }).IsUnique();
+        funding.Property(x => x.Kind).HasConversion<string>();
+        funding.Property(x => x.Coverage).HasConversion<string>();
+        funding.Property(x => x.Amount).HasPrecision(18, 2);
+        funding.Property(x => x.Currency).HasMaxLength(3);
+        funding.Property(x => x.Conditions).HasMaxLength(2000);
+        var evidence = modelBuilder.Entity<FieldEvidence>();
+        evidence.Property(x => x.Field).HasMaxLength(80);
+        evidence.Property(x => x.SourceUrl).HasMaxLength(2000);
+        evidence.Property(x => x.Excerpt).HasMaxLength(2000);
+        evidence.HasIndex(x => new { x.OpportunityCycleId, x.Field });
         var institution = modelBuilder.Entity<Institution>();
         institution.HasIndex(x => x.Domain).IsUnique();
         institution.Property(x => x.Domain).HasMaxLength(253);
