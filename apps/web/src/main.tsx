@@ -1,4 +1,4 @@
-﻿import { StrictMode, useEffect, useRef } from 'react';
+import { StrictMode, useEffect, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, NavLink, Link, Route, Routes, useLocation } from 'react-router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -9,6 +9,7 @@ import { Editor } from './editor';
 import { Explorer, OpportunityDetail } from './catalogue';
 import './style.css';
 import { SavedPage, ReportsPage } from './saved';
+import { DemoJourney } from './demo';
 const queryClient=new QueryClient();
 function App() {
  const session=useSession();
@@ -18,8 +19,9 @@ function App() {
   document.title=(names[pathname]??(pathname.startsWith('/opportunities/')?'Opportunity details':'Scholarship workspace'))+' | Scholarship Assistant';
   if(previousPath.current!==pathname){document.getElementById('main')?.focus();window.scrollTo(0,0);previousPath.current=pathname;}
  },[pathname]);
- return <><a className="skip-link" href="#main">Skip to content</a><header className="border-b border-slate-200 bg-white"><div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-5"><Link to="/" className="font-bold text-teal-900">Scholarship Assistant</Link><nav aria-label="Main navigation" className="flex flex-wrap gap-5 text-sm"><NavLink to="/" end>Opportunities</NavLink><NavLink to="/about">About</NavLink><NavLink to="/saved">Shortlist</NavLink><NavLink to="/account">Account</NavLink>{session.data?.roles.some(x=>['Editor','Administrator'].includes(x))&&<NavLink to="/editor">Editor workspace</NavLink>}</nav></div></header><main id="main" tabIndex={-1} className="mx-auto max-w-4xl px-6 py-12"><Routes>
+ return <><a className="skip-link" href="#main">Skip to content</a><header className="border-b border-slate-200 bg-white"><div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-5"><Link to="/" className="font-bold text-teal-900">Scholarship Assistant</Link><nav aria-label="Main navigation" className="flex flex-wrap gap-5 text-sm"><NavLink to="/" end>Opportunities</NavLink><NavLink to="/demo">Demo</NavLink><NavLink to="/about">About</NavLink><NavLink to="/saved">Shortlist</NavLink><NavLink to="/account">Account</NavLink>{session.data?.roles.some(x=>['Editor','Administrator'].includes(x))&&<NavLink to="/editor">Editor workspace</NavLink>}</nav></div></header><main id="main" tabIndex={-1} className="mx-auto max-w-4xl px-6 py-12"><Routes>
  <Route path="/" element={<Explorer/>}/><Route path="/opportunities/:id" element={<OpportunityDetail/>}/>
+ <Route path="/demo" element={<DemoJourney/>}/>
  <Route path="/saved" element={<SavedPage/>}/><Route path="/editor/reports" element={<ReportsPage/>}/>
  <Route path="/security" element={<SecuritySettings/>}/><Route path="/editor" element={<Editor/>}/><Route path="/editor/:id" element={<Editor/>}/>
  {['register','login','verify','forgot','reset','account','resend'].map(path=><Route key={path} path={'/'+path} element={<Account key={path}/>}/>)}

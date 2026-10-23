@@ -119,7 +119,7 @@ Foundation evidence (23 October 2026): [F01 report](f01-report.md), [F04 report]
   - Done when: 320–2560 CSS px and intermediate widths work; zoom, keyboard, long text and errors do not break layouts.
   - Area: Frontend. Depends on: F04;C07.
 
-- [ ] **C10 — Provide public sample journey**
+- [x] **C10 — Provide public sample journey**
   - Done when: Clearly fictional profile/demo can be explored without signup; visitors cannot edit shared catalogue data.
   - Area: Demo. Depends on: C07.
 
