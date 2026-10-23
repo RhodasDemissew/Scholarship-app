@@ -1,14 +1,7 @@
-import { test, expect } from '@playwright/test';
+﻿import { test, expect } from '@playwright/test';
 import { post, register, password } from './helpers';
-import { grant, totp } from './security-helpers';
+import { editor } from './security-helpers';
 import type { APIRequestContext } from '@playwright/test';
-export async function editor(api: APIRequestContext) {
- const email=await register(api,'editor'); grant(email,'Editor');
- await post(api,'/api/v1/auth/login',{email,password});
- const {key}=await (await post(api,'/api/v1/auth/mfa/setup')).json();
- expect((await post(api,'/api/v1/auth/mfa/enable',{code:totp(key)})).ok()).toBeTruthy();
- return email;
-}
 test('C05 drafts, evidence review, publication, stale edits, correction and archive', async ({ request: api, page }) => {
  await editor(api);
  const draft={title:'Workflow test '+Date.now(),institutionName:'Workflow University',domain:'workflow.example.test',country:'Test country',programmeName:'Workflow MSc',programmeUrl:'https://workflow.example.test/msc',awardName:null,sponsor:null,awardUrl:null,intakeLabel:'test-'+Date.now(),round:'main',isFictional:true,applicationStatus:'Unknown',deadlines:[],funding:[],evidence:[]};
@@ -41,3 +34,4 @@ test('C05 drafts, evidence review, publication, stale edits, correction and arch
  await post(api,'/api/v1/auth/logout');
  expect((await api.get('/api/v1/editor/opportunities/'+id)).status()).toBe(401);
 });
+

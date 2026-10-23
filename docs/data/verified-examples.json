@@ -1,0 +1,317 @@
+﻿{
+  "reviewedOn": "2026-10-23",
+  "notes": "Official-source review. Evidence explicitly labeled Reviewer summary is a paraphrase; other evidence entries are short quotations. Opening states are snapshots at review time. No personal eligibility guarantee.",
+  "records": [
+    {
+      "title": "Oxford Advanced Computer Science — Clarendon",
+      "institutionName": "University of Oxford",
+      "domain": "ox.ac.uk",
+      "country": "United Kingdom",
+      "programmeName": "MSc in Advanced Computer Science",
+      "programmeUrl": "https://www.ox.ac.uk/admissions/graduate/courses/msc-advanced-computer-science",
+      "awardName": "Clarendon Scholarship",
+      "sponsor": "University of Oxford",
+      "awardUrl": "https://www.ox.ac.uk/admissions/graduate/fees-and-funding/funding/clarendon/applicants",
+      "intakeLabel": "2027-28",
+      "round": "january funding",
+      "isFictional": false,
+      "applicationStatus": "Open",
+      "deadlines": [
+        {
+          "kind": "Scholarship",
+          "originalText": "12:00 midday UK time on Wednesday 6 January 2027",
+          "precision": "DateTime",
+          "localDate": "2027-01-06",
+          "localTime": "12:00:00",
+          "timeZone": "Europe/London"
+        }
+      ],
+      "funding": [
+        {
+          "kind": "Tuition",
+          "coverage": "Covered",
+          "amount": null,
+          "currency": null,
+          "conditions": "Full course fees for selected scholars."
+        },
+        {
+          "kind": "Stipend",
+          "coverage": "Covered",
+          "amount": null,
+          "currency": null,
+          "conditions": "Living grant; 2027-28 amount not verified. Do not reuse older published rates."
+        },
+        {
+          "kind": "Travel",
+          "coverage": "Unknown",
+          "amount": null,
+          "currency": null,
+          "conditions": "Not verified for this intake; confirm with the provider."
+        },
+        {
+          "kind": "Insurance",
+          "coverage": "Unknown",
+          "amount": null,
+          "currency": null,
+          "conditions": "Not verified for this intake; confirm with the provider."
+        },
+        {
+          "kind": "Visa",
+          "coverage": "Unknown",
+          "amount": null,
+          "currency": null,
+          "conditions": "Not verified for this intake; confirm with the provider."
+        },
+        {
+          "kind": "Other",
+          "coverage": "Unknown",
+          "amount": null,
+          "currency": null,
+          "conditions": "Not verified for this intake; confirm with the provider."
+        }
+      ],
+      "evidence": [
+        {
+          "field": "overview",
+          "sourceUrl": "https://www.ox.ac.uk/admissions/graduate/courses/msc-advanced-computer-science",
+          "excerpt": "Reviewer summary: this master's course advertises October 2027 entry. Programme eligibility is separate from scholarship selection."
+        },
+        {
+          "field": "overview",
+          "sourceUrl": "https://www.ox.ac.uk/admissions/graduate/fees-and-funding/funding/clarendon/applicants",
+          "excerpt": "Reviewer summary: new master's applicants who meet the relevant course funding deadline are considered automatically for Clarendon, without a separate award form."
+        },
+        {
+          "field": "opening",
+          "sourceUrl": "https://www.ox.ac.uk/admissions/graduate/courses/msc-advanced-computer-science",
+          "excerpt": "Reviewer summary: the course page explicitly labels full-time applications Open for 2027-28."
+        },
+        {
+          "field": "deadline.Scholarship",
+          "sourceUrl": "https://www.ox.ac.uk/admissions/graduate/courses/msc-advanced-computer-science",
+          "excerpt": "Reviewer summary: the displayed January course deadline is midday UK time; Clarendon uses the relevant course funding deadline."
+        },
+        {
+          "field": "funding.Tuition",
+          "sourceUrl": "https://www.ox.ac.uk/admissions/graduate/fees-and-funding/funding/clarendon/applicants",
+          "excerpt": "cover course fees in full"
+        },
+        {
+          "field": "funding.Stipend",
+          "sourceUrl": "https://www.ox.ac.uk/admissions/graduate/fees-and-funding/funding/clarendon/applicants",
+          "excerpt": "annual grant for living expenses"
+        }
+      ]
+    },
+    {
+      "title": "ETH Computer Science — ESOP",
+      "institutionName": "ETH Zurich",
+      "domain": "ethz.ch",
+      "country": "Switzerland",
+      "programmeName": "MSc Computer Science",
+      "programmeUrl": "https://ethz.ch/en/studies/master/degree-programmes/engineering-sciences/computer-science.html",
+      "awardName": "Excellence Scholarship & Opportunity Programme",
+      "sponsor": "ETH Zurich",
+      "awardUrl": "https://ethz.ch/students/en/studies/financial/scholarships/excellencescholarship.html/",
+      "intakeLabel": "autumn 2027",
+      "round": "international november",
+      "isFictional": false,
+      "applicationStatus": "Announced",
+      "deadlines": [
+        {
+          "kind": "Scholarship",
+          "originalText": "30 November 2026, 11:59AM CET",
+          "precision": "DateTime",
+          "localDate": "2026-11-30",
+          "localTime": "11:59:00",
+          "timeZone": "Europe/Zurich"
+        }
+      ],
+      "funding": [
+        {
+          "kind": "Tuition",
+          "coverage": "Covered",
+          "amount": null,
+          "currency": null,
+          "conditions": "Tuition fee waiver for the standard programme duration."
+        },
+        {
+          "kind": "Stipend",
+          "coverage": "Covered",
+          "amount": null,
+          "currency": null,
+          "conditions": "Study/living support per semester. Amount not normalized here; confirm the award terms."
+        },
+        {
+          "kind": "Travel",
+          "coverage": "Unknown",
+          "amount": null,
+          "currency": null,
+          "conditions": "Not verified for this intake; confirm with the provider."
+        },
+        {
+          "kind": "Insurance",
+          "coverage": "Unknown",
+          "amount": null,
+          "currency": null,
+          "conditions": "Not verified for this intake; confirm with the provider."
+        },
+        {
+          "kind": "Visa",
+          "coverage": "Unknown",
+          "amount": null,
+          "currency": null,
+          "conditions": "Not verified for this intake; confirm with the provider."
+        },
+        {
+          "kind": "Other",
+          "coverage": "Unknown",
+          "amount": null,
+          "currency": null,
+          "conditions": "Not verified for this intake; confirm with the provider."
+        }
+      ],
+      "evidence": [
+        {
+          "field": "overview",
+          "sourceUrl": "https://ethz.ch/en/studies/master/degree-programmes/engineering-sciences/computer-science.html",
+          "excerpt": "Reviewer summary: ETH offers an English-language, two-year Computer Science MSc."
+        },
+        {
+          "field": "overview",
+          "sourceUrl": "https://ethz.ch/students/en/studies/financial/scholarships/excellencescholarship.html/",
+          "excerpt": "Reviewer summary: ESOP supports eligible new master's entrants for autumn 2027; admission and scholarship selection are distinct."
+        },
+        {
+          "field": "opening",
+          "sourceUrl": "https://ethz.ch/en/studies/master/application/dates.html",
+          "excerpt": "Reviewer summary: the autumn 2027 international/ESOP application window is scheduled for 1–30 November 2026. It is not yet open on the review date."
+        },
+        {
+          "field": "deadline.Scholarship",
+          "sourceUrl": "https://ethz.ch/en/studies/master/application/dates.html",
+          "excerpt": "Reviewer summary: the central admissions page explicitly specifies AM and CET. This is a midday deadline, not end of day."
+        },
+        {
+          "field": "funding.Tuition",
+          "sourceUrl": "https://ethz.ch/students/en/studies/financial/scholarships/excellencescholarship.html/",
+          "excerpt": "tuition fee waiver"
+        },
+        {
+          "field": "funding.Stipend",
+          "sourceUrl": "https://ethz.ch/students/en/studies/financial/scholarships/excellencescholarship.html/",
+          "excerpt": "scholarship covering living and study expenses"
+        }
+      ]
+    },
+    {
+      "title": "Cambridge Advanced Computer Science — Gates Cambridge",
+      "institutionName": "University of Cambridge",
+      "domain": "cam.ac.uk",
+      "country": "United Kingdom",
+      "programmeName": "MPhil in Advanced Computer Science",
+      "programmeUrl": "https://www.postgraduate.study.cam.ac.uk/courses/directory/cscsmpacs/apply",
+      "awardName": "Gates Cambridge",
+      "sponsor": "Gates Cambridge Trust",
+      "awardUrl": "https://www.cst.cam.ac.uk/postgraduate-admissions/getting-funding",
+      "intakeLabel": "michaelmas 2027",
+      "round": "other eligible applicants",
+      "isFictional": false,
+      "applicationStatus": "Open",
+      "deadlines": [
+        {
+          "kind": "Admission",
+          "originalText": "Application deadline Feb. 25, 2027",
+          "precision": "Date",
+          "localDate": "2027-02-25",
+          "localTime": null,
+          "timeZone": null
+        },
+        {
+          "kind": "Scholarship",
+          "originalText": "Course Funding Deadline Dec. 8, 2026 (course directory); 23:59 (GMT) on 2 December 2026 (department funding guidance). Conflicting official dates: confirm with Cambridge before relying on either.",
+          "precision": "Unknown",
+          "localDate": null,
+          "localTime": null,
+          "timeZone": null
+        }
+      ],
+      "funding": [
+        {
+          "kind": "Tuition",
+          "coverage": "Unknown",
+          "amount": null,
+          "currency": null,
+          "conditions": "Not verified for this intake; confirm with the provider."
+        },
+        {
+          "kind": "Stipend",
+          "coverage": "Unknown",
+          "amount": null,
+          "currency": null,
+          "conditions": "Not verified for this intake; confirm with the provider."
+        },
+        {
+          "kind": "Travel",
+          "coverage": "Unknown",
+          "amount": null,
+          "currency": null,
+          "conditions": "Not verified for this intake; confirm with the provider."
+        },
+        {
+          "kind": "Insurance",
+          "coverage": "Unknown",
+          "amount": null,
+          "currency": null,
+          "conditions": "Not verified for this intake; confirm with the provider."
+        },
+        {
+          "kind": "Visa",
+          "coverage": "Unknown",
+          "amount": null,
+          "currency": null,
+          "conditions": "Not verified for this intake; confirm with the provider."
+        },
+        {
+          "kind": "Other",
+          "coverage": "Unknown",
+          "amount": null,
+          "currency": null,
+          "conditions": "Not verified for this intake; confirm with the provider."
+        }
+      ],
+      "evidence": [
+        {
+          "field": "overview",
+          "sourceUrl": "https://www.postgraduate.study.cam.ac.uk/courses/directory/cscsmpacs/apply",
+          "excerpt": "Reviewer summary: the October 2027 MPhil application page includes a Gates Cambridge scholarship section and additional reference requirements."
+        },
+        {
+          "field": "overview",
+          "sourceUrl": "https://www.cst.cam.ac.uk/postgraduate-admissions/getting-funding",
+          "excerpt": "Reviewer summary: the Computer Science department identifies Gates Cambridge as a funding route for international MPhil applicants. Individual eligibility is not certified by this listing."
+        },
+        {
+          "field": "opening",
+          "sourceUrl": "https://www.postgraduate.study.cam.ac.uk/courses/directory/cscsmpacs/apply",
+          "excerpt": "Reviewer summary: the course directory lists applications opening on 9 September 2026 for Michaelmas 2027."
+        },
+        {
+          "field": "deadline.Admission",
+          "sourceUrl": "https://www.postgraduate.study.cam.ac.uk/courses/directory/cscsmpacs/apply",
+          "excerpt": "Reviewer summary: the course directory supplies a final February date, without a time in the displayed course summary; courses may close early."
+        },
+        {
+          "field": "deadline.Scholarship",
+          "sourceUrl": "https://www.postgraduate.study.cam.ac.uk/courses/directory/cscsmpacs/apply",
+          "excerpt": "Reviewer summary: the course directory gives a December 8 funding date, while department guidance differs. No normalized funding deadline is asserted."
+        },
+        {
+          "field": "deadline.Scholarship",
+          "sourceUrl": "https://www.cst.cam.ac.uk/admissions/acs",
+          "excerpt": "Reviewer summary: department text states December 2 for University/Cambridge Trust funding but also refers to December 8 for other applications including Gates. The conflict requires provider confirmation."
+        }
+      ]
+    }
+  ]
+}

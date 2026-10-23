@@ -13,3 +13,13 @@ export function grant(email: string, role: string) {
  execFileSync('dotnet', ['bin/Release/net10.0/Scholarship.Api.dll','--grant-role',email,role], { cwd: resolve('../../src/Scholarship.Api'), env: { ...process.env, ASPNETCORE_ENVIRONMENT:'Development' }, stdio:'pipe' });
 }
 
+import { expect, type APIRequestContext } from '@playwright/test';
+import { post, register, password } from './helpers';
+export async function editor(api: APIRequestContext) {
+ const email=await register(api,'editor'); grant(email,'Editor');
+ await post(api,'/api/v1/auth/login',{email,password});
+ const {key}=await (await post(api,'/api/v1/auth/mfa/setup')).json();
+ expect((await post(api,'/api/v1/auth/mfa/enable',{code:totp(key)})).ok()).toBeTruthy();
+ return email;
+}
+
