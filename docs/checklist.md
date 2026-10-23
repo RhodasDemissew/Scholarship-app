@@ -1,4 +1,4 @@
-﻿# Scholarship Assistant — Version Checklist
+# Scholarship Assistant — Version Checklist
 
 Prepared 20 October 2026 from Implementation Blueprint revision 1.2. Product releases below are distinct from the blueprint document's revision number. Existing completion marks are preserved. Execution order revised 23 October 2026: finish V1 locally before deployment.
 
@@ -115,7 +115,7 @@ Foundation evidence (23 October 2026): [F01 report](f01-report.md), [F04 report]
   - Done when: Save/unsave is user-owned and idempotent; applicant can flag incorrect information.
   - Area: Applications. Depends on: C07;C01.
 
-- [ ] **C09 — Build responsive shell and accessible forms**
+- [x] **C09 — Build responsive shell and accessible forms**
   - Done when: 320–2560 CSS px and intermediate widths work; zoom, keyboard, long text and errors do not break layouts.
   - Area: Frontend. Depends on: F04;C07.
 
