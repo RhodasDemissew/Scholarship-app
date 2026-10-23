@@ -1,30 +1,30 @@
-# Current task: F03 — Build the first end-to-end listing
+﻿# Current task: F04 / F09 - local foundation complete
 
-Status: **Complete** (21 October 2026). Next task: **F04 — Configure frontend conventions**.
+Status: Complete, 23 October 2026. Next selected task: C01 - Implement signup and secure sessions.
 
-## Scope
+## Completed scope
 
-Add one clearly fictional opportunity cycle to PostgreSQL with an EF Core migration, expose it through the API, and show it in React with loading, error, retry, and empty states. This is a small vertical slice; the full catalogue model belongs to later tasks.
+F04 installed and demonstrated the approved frontend conventions in a visible sample
+listing/search flow, with generated OpenAPI client and development Swagger UI. F01's
+completion evidence was reconciled. F09 passed the local foundation gate, including
+fresh isolated database migrations and the outstanding F03 rendered-browser check.
 
-## Completion criteria
+## Verification and reports
 
-- A fictional cycle is read from PostgreSQL through the API.
-- React fetches and displays that cycle, with loading and error states.
-
-## Verification results
-
-- Migration `20261021092859_FirstOpportunityCycle` applied to the local PostgreSQL database.
-- API `GET /api/v1/opportunities` returned the seeded fictional cycle; `GET /health` returned healthy.
-- Vite proxy `GET /api/v1/opportunities` returned the same cycle while the API ran. With the API stopped, the proxy returned HTTP 500, exercising the response failure that React handles with its error and retry state.
-- API and Worker Release builds passed with zero warnings or errors. Frontend `npm.cmd run build` passed.
-- A visual browser check could not run because this session has no available browser surface. The React display and state transitions are implemented and compile, but their rendered appearance remains for a manual browser check.
+API/Worker Release builds and clean frontend install/build passed. Four Edge browser
+tests passed, covering live listing, validated search, navigation, loading/error/retry,
+empty results and Swagger execution. Screenshots reviewed; no horizontal overflow at
+320/768/1440px. Production documentation routes return 404. Two non-blocking upstream
+Zod bundler-comment warnings remain. Reports: docs/f01-report.md, docs/f04-report.md,
+docs/f09-report.md. Repeatable commands are in README.md.
 
 ## Handoff
 
-Start Docker services and apply migrations using the README commands, then run the API and Vite in separate terminals. Open the Vite URL to check the fictional card and stop the API to check the error/retry state. The learning report is in `docs/f03-report.md`. F04 adds the planned frontend libraries, generated API client, and Swagger UI; no F04 tooling was added here.
+Run Docker services, the API and Vite using README. Open http://127.0.0.1:5173 to test
+and http://127.0.0.1:5080/swagger for endpoint testing. The isolated fresh-migration
+database scholarship_f09_verify remains available for inspection.
 
-## Execution order update — 23 October 2026
-
-The selected next implementation task remains F04. Follow `docs/checklist.md`: complete V1 milestones 1A–1D locally, pass L01, then perform 1E deployment and hosted verification. Do not begin F05–F08 during foundation work. N02 and O01–O03 now cover local email/diagnostics/recovery; R01–R02 activate and verify the hosted equivalents. Task IDs and existing completion marks are preserved. F01 remains unchecked in the checklist and needs evidence reconciliation; this planning update does not certify it complete.
-
-Planning verification: 94 unique task IDs (62 V1); all dependencies resolve with no cycles; no local task depends on a deployment task. No application code changed.
+C01 scope: Identity cookies, verification, login/logout and reset; React sends CSRF
+tokens on unsafe requests. Read relevant blueprint sections before implementation.
+Continue V1 locally through 1A-1D and L01 before 1E deployment. F05-F08 remain deferred.
+Each completed checklist item receives its own report. Do not implement docs/ideas.md.

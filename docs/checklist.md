@@ -59,7 +59,7 @@ Check an item only when its completion criterion is demonstrated, relevant failu
 
 ### 1A Foundation (Phase 0)
 
-- [ ] **F01 — Set up repository and projects**
+- [x] **F01 — Set up repository and projects**
   - Done when: React/Vite/TypeScript and ASP.NET API/Core/Infrastructure/Worker build; versions pinned and README runs locally.
   - Area: Engineering. Depends on: None.
 
@@ -71,13 +71,15 @@ Check an item only when its completion criterion is demonstrated, relevant failu
   - Done when: A fictional cycle is read from PostgreSQL through the API and shown in React with loading and error states.
   - Area: Catalogue. Depends on: F02.
 
-- [ ] **F04 — Configure frontend conventions**
+- [x] **F04 — Configure frontend conventions**
   - Done when: Router, Tailwind/shadcn, Query, Hook Form/Zod and generated OpenAPI client work in a sample flow; Swagger UI serves the API's OpenAPI document in development for manual endpoint testing.
   - Area: Frontend/API tooling. Depends on: F03.
 
-- [ ] **F09 — Pass local foundation milestone**
+- [x] **F09 — Pass local foundation milestone**
   - Done when: Fresh local setup, migrations, API/database listing, frontend conventions and local builds are demonstrated; resolve the outstanding F03 manual browser check. No deployed environment is required.
   - Area: Local gate. Depends on: F01;F02;F03;F04.
+
+Foundation evidence (23 October 2026): [F01 report](f01-report.md), [F04 report](f04-report.md), [F09 report](f09-report.md). F09 also resolves the outstanding F03 browser verification.
 
 ### 1B Catalogue and imports (Phase 1)
 

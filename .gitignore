@@ -12,3 +12,5 @@ obj/
 coverage/
 .npm-cache/
 *.tsbuildinfo
+test-results/
+playwright-report/

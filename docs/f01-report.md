@@ -67,3 +67,13 @@ The user subsequently selected Node 22 as the project runtime. The README, manif
 Git is local and owned by `rhoda`, with no commit or remote. Publishing has not occurred.
 
 After the initial report, Vite was updated from 7.1.12 to 7.3.7 in the frontend manifest and lockfile in response to npm security advisories. On Node 22.17.1, a clean install and build passed in `apps/web`, and `npm audit --audit-level=high` reported zero vulnerabilities.
+
+## Evidence reconciliation - 23 October 2026
+
+F01 is now checked in the checklist. Node 22.17.1 clean `npm ci` and production build
+passed in apps/web; npm reported zero vulnerabilities. API and Worker Release builds
+passed with zero warnings/errors and compiled Core/Infrastructure. The README startup
+flow ran against Docker PostgreSQL and was verified in an actual browser. Package
+versions remain pinned with the npm lockfile and central NuGet versions. This resolves
+the earlier unchecked tracker row and stale node_modules warning. F04's frontend build
+has two non-blocking upstream Zod comment-annotation warnings.

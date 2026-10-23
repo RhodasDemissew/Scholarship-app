@@ -58,3 +58,35 @@ cd apps/web
 npm.cmd ci
 npm.cmd run build
 ```
+
+## F04 frontend conventions
+
+The local preview now includes a searchable fictional listing, About route, form validation,
+and loading/error/retry/empty states. Search filters the loaded sample only; nothing is saved.
+
+With the API running in Development, open http://127.0.0.1:5080/swagger to try endpoints.
+The OpenAPI document is at http://127.0.0.1:5080/openapi/v1.json. Both are disabled in Production.
+
+From `apps/web`:
+
+```powershell
+npm.cmd run api:refresh # Fetch live schema and regenerate contracts after API changes
+npm.cmd run api:generate # Regenerate from the checked-in openapi.json without a running API
+npm.cmd run build
+npm.cmd exec playwright install chromium
+npm.cmd run test:e2e # Requires API + PostgreSQL; starts Vite automatically
+```
+
+Alternatively use installed Edge: `$env:PLAYWRIGHT_CHANNEL = 'msedge'` before the test command.
+The tests expect the single fictional seed in the local development database.
+
+Conventions: React Router owns page routes; TanStack Query owns API state; `src/lib/api.ts`
+wraps openapi-fetch using generated contracts. React Hook Form + Zod validate the local search.
+Tailwind 4 styles the app; the adapted shadcn-style Button/Input source lives in
+`src/components/ui`, with `cn` and `components.json` for extending the component set.
+Do not edit `api.generated.ts` manually. The current DTO has required string/UUID/boolean
+fields; dates, nullable fields and enums are not yet part of this contract.
+
+Manual check: search for an absent title, clear it, enter over 80 characters, navigate to
+About and back, and stop/restart the API then use Try again. Reports: `docs/f04-report.md`
+and `docs/f09-report.md`.
