@@ -22,3 +22,9 @@ Add one clearly fictional opportunity cycle to PostgreSQL with an EF Core migrat
 ## Handoff
 
 Start Docker services and apply migrations using the README commands, then run the API and Vite in separate terminals. Open the Vite URL to check the fictional card and stop the API to check the error/retry state. The learning report is in `docs/f03-report.md`. F04 adds the planned frontend libraries, generated API client, and Swagger UI; no F04 tooling was added here.
+
+## Execution order update — 23 October 2026
+
+The selected next implementation task remains F04. Follow `docs/checklist.md`: complete V1 milestones 1A–1D locally, pass L01, then perform 1E deployment and hosted verification. Do not begin F05–F08 during foundation work. N02 and O01–O03 now cover local email/diagnostics/recovery; R01–R02 activate and verify the hosted equivalents. Task IDs and existing completion marks are preserved. F01 remains unchecked in the checklist and needs evidence reconciliation; this planning update does not certify it complete.
+
+Planning verification: 94 unique task IDs (62 V1); all dependencies resolve with no cycles; no local task depends on a deployment task. No application code changed.
