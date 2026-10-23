@@ -5,6 +5,7 @@ using Scholarship.Api;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 Auth.Configure(builder);
+Security.Configure(builder);
 builder.Services.AddProblemDetails();
 builder.Services.AddDbContext<ScholarshipDbContext>(options =>
     options.UseNpgsql(
@@ -14,6 +15,7 @@ builder.Services.AddDbContext<ScholarshipDbContext>(options =>
 var app = builder.Build();
 app.UseExceptionHandler();
 Auth.Map(app);
+Security.Map(app);
 
 if (app.Environment.IsDevelopment())
 {
@@ -39,6 +41,7 @@ app.MapGet("/api/v1/opportunities", async (ScholarshipDbContext db, Cancellation
     return TypedResults.Ok(opportunities);
 }).WithName("ListOpportunities");
 
+if (await Security.Initialize(app, args)) return;
 app.Run();
 
 internal sealed record OpportunityResponse(

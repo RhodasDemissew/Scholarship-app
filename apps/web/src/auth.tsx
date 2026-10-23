@@ -42,7 +42,8 @@ export function Account() {
  <Button disabled={form.formState.isSubmitting}>{form.formState.isSubmitting ? 'Working...' : title[action]}</Button></form>}
  {twoFactor && <form className="mt-4 space-y-3" onSubmit={async e => { e.preventDefault(); try { await request('/api/v1/auth/two-factor','POST',{code}); client.clear(); setTwoFactor(false); setMessage('Signed in.'); } catch(e) { setError((e as Error).message); } }}><label htmlFor="code">Authenticator code</label><Input id="code" autoComplete="one-time-code" value={code} onChange={e => setCode(e.target.value)}/><Button>Verify code</Button></form>}
  {message && <p role="status" className="mt-4">{message}</p>}{error && <p role="alert" className="mt-4 text-red-700">{error}</p>}
- <nav aria-label="Account actions" className="mt-6 flex flex-wrap gap-4 underline"><Link to="/login">Sign in</Link><Link to="/register">Register</Link><Link to="/forgot">Forgot password</Link><Link to="/resend">Resend verification</Link></nav>
+ <nav aria-label="Account actions" className="mt-6 flex flex-wrap gap-4 underline"><Link to="/login">Sign in</Link><Link to="/register">Register</Link><Link to="/forgot">Forgot password</Link><Link to="/resend">Resend verification</Link><Link to="/security">Authenticator setup</Link></nav>
  </div></>;
 }
+
 

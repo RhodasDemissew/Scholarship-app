@@ -1,6 +1,6 @@
 ﻿# Current task: C01-C10
 
-User authorized C01-C10, one report and one commit per completed item.
-C01 complete: see docs/c01-report.md. Next: C02 account/editor protection.
-Keep local-first scope and approved stack. C01 account browser test and builds pass.
-After C10, provide a high-level and technical explanation of F01-C10 in chat.
+C01 and C02 complete and reported in docs/c01-report.md and docs/c02-report.md.
+Next: C03 opportunity identity/intake/round model. User requested one report/commit per
+item, then high-level and technical explanation of foundation through C10. Local only.
+C02 role/MFA/throttling test and encrypted-key restart check pass.

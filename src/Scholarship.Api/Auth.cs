@@ -49,7 +49,16 @@ public static class Auth
             options.Events.OnRedirectToLogin = context => { context.Response.StatusCode = 401; return Task.CompletedTask; };
             options.Events.OnRedirectToAccessDenied = context => { context.Response.StatusCode = 403; return Task.CompletedTask; };
         });
-        builder.Services.Configure<SecurityStampValidatorOptions>(options => options.ValidationInterval = TimeSpan.Zero);
+        builder.Services.Configure<SecurityStampValidatorOptions>(options =>
+        {
+            options.ValidationInterval = TimeSpan.Zero;
+            options.OnRefreshingPrincipal = context =>
+            {
+                if (context.CurrentPrincipal?.HasClaim("amr", "mfa") == true && context.NewPrincipal?.Identity is System.Security.Claims.ClaimsIdentity identity)
+                    identity.AddClaim(new("amr", "mfa"));
+                return Task.CompletedTask;
+            };
+        });
         builder.Services.Configure<DataProtectionTokenProviderOptions>(options => options.TokenLifespan = TimeSpan.FromHours(1));
         builder.Services.AddAntiforgery(options =>
         {
@@ -85,7 +94,7 @@ public static class Auth
         });
         var group = app.MapGroup("/api/v1/auth");
         group.MapGet("/csrf", (HttpContext context, IAntiforgery antiforgery) =>
-            TypedResults.Ok(new { token = antiforgery.GetAndStoreTokens(context).RequestToken }));
+            TypedResults.Ok(new { token = antiforgery.GetAndStoreTokens(context).RequestToken })).DisableRateLimiting();
         group.MapGet("/session", async (HttpContext context, UserManager<IdentityUser> users) =>
         {
             var user = await users.GetUserAsync(context.User);
@@ -101,6 +110,7 @@ public static class Auth
                 var user = new IdentityUser { UserName = input.Email.Trim(), Email = input.Email.Trim() };
                 var result = await users.CreateAsync(user, input.Password);
                 if (!result.Succeeded) return Error(string.Join(" ", result.Errors.Select(e => e.Description)));
+                await users.AddToRoleAsync(user, "Applicant");
                 await mail.Send(user.Email, "verify", await users.GenerateEmailConfirmationTokenAsync(user));
             }
             return Results.Ok(new { message = "If the address can be registered, check your email to verify it." });
@@ -138,8 +148,12 @@ public static class Auth
             var result = await users.ResetPasswordAsync(user, input.Token, input.Password);
             return result.Succeeded ? Results.Ok(new { message = "Password updated. Sign in with your new password." }) : Error("Invalid/expired link or password does not meet the requirements.");
         });
+
+        group.RequireRateLimiting("auth");
     }
     private static bool ValidEmail(string email) => email.Length <= 254 && new EmailAddressAttribute().IsValid(email);
     public static IResult Error(string message) => Results.Problem(statusCode: 400, title: message);
 }
+
+
 
